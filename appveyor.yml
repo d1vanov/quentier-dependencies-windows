@@ -85,7 +85,6 @@ build_script:
   - if %build_tool%==mingw del libiconv-1.15.tar.gz
   - if %build_tool%==mingw cd libiconv-1.15
   - if %build_suite%==mingw492_32 C:\cygwin\bin\bash -lc "cd /cygdrive/c/dev/libiconv-win-build/libiconv-1.15 && export PATH=/usr/local/mingw32/bin:$PATH && ./configure --host=i686-w64-mingw32 --prefix=$(pwd)/installdir CC=i686-w64-mingw32-gcc CPPFLAGS='-I/usr/local/mingw32/include -Wall' LDFLAGS='-L/usr/local/mingw32/lib' && make && make check && make install"
-  - if %build_tool%==mingw cd installdir
 # Finalization
   - cd installdir
   - set PATH=%cd%\bin;%PATH%
