@@ -111,10 +111,10 @@ build_script:
   - if %build_suite%==msvc2015 copy Release\libz.lib installdir\lib\libz.lib
   - if %build_suite%==msvc2017 copy x64\Release\libz.dll installdir\bin\libz.dll
   - if %build_suite%==msvc2017 copy x64\Release\libz.lib installdir\lib\libz.lib
-  - if not %build_tool%==mingw copy zlib.h installdir\include
-  - if not %build_tool%==mingw copy zconf.h installdir\include
+  - if not %build_tool%==mingw copy ..\zlib.h installdir\include
+  - if not %build_tool%==mingw copy ..\zconf.h installdir\include
   - if not %build_tool%==mingw set ZLIB_LIBRARIES=%cd%\installdir\lib\libz.lib
-  - if not %build_tool%==mingw set ZLIB_INCLUDE_DIRS=%cd%\..
+  - if not %build_tool%==mingw set ZLIB_INCLUDE_DIRS=%cd\installdir\include
 # MinGW branch
   - if %build_tool%==mingw md zlib-win-build
   - if %build_tool%==mingw cd zlib-win-build
