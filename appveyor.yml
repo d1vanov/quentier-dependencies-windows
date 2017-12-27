@@ -12,15 +12,15 @@ environment:
 #      arch_name: none
 #      build_tool: none
 #      build_suite: none
-    - prepare_mode: NO
-      arch_name: x86
-      build_tool: msvc
-      build_suite: msvc2015
-    - prepare_mode: NO
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      arch_name: x64
-      build_tool: msvc
-      build_suite: msvc2017
+#    - prepare_mode: NO
+#      arch_name: x86
+#      build_tool: msvc
+#      build_suite: msvc2015
+#    - prepare_mode: NO
+#      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+#      arch_name: x64
+#      build_tool: msvc
+#      build_suite: msvc2017
     - prepare_mode: NO
       arch_name: x86
       build_tool: mingw
@@ -86,7 +86,7 @@ build_script:
   - if %build_tool%==mingw del libiconv-1.15.tar
   - if %build_tool%==mingw del libiconv-1.15.tar.gz
   - if %build_tool%==mingw cd libiconv-1.15
-  - if %build_suite%==mingw492_32 C:\cygwin\bin\bash -lc 'cd /cygdrive/c/dev/libiconv-win-build/libiconv-1.15 && export PATH=/usr/local/mingw32/bin:$PATH && ./configure --host=i686-w64-mingw32 --prefix=$(pwd)/installdir CC=i686-w64-mingw32-gcc CPPFLAGS="-I/usr/local/mingw32/include -Wall" LDFLAGS="-L/usr/local/mingw32/lib" && make && make check && make install'
+  - if %build_suite%==mingw492_32 C:\cygwin\bin\bash -lc "cd /cygdrive/c/dev/libiconv-win-build/libiconv-1.15 && export PATH=/usr/local/mingw32/bin:$PATH && ./configure --host=i686-w64-mingw32 --prefix=$(pwd)/installdir CC=i686-w64-mingw32-gcc CPPFLAGS='-I/usr/local/mingw32/include -Wall' LDFLAGS='-L/usr/local/mingw32/lib' && make && make check && make install"
   - if %build_tool%==mingw cd installdir
   - if %build_tool%==mingw dir /s
   - if not %build_tool%==mingw 7z a libiconv-%build_suite%_%arch_name%.zip *
