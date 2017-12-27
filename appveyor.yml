@@ -60,9 +60,9 @@ build_script:
   - if not %build_tool%==mingw git clone https://github.com/kiyolee/libiconv-win-build.git libiconv-win-build
   - if not %build_tool%==mingw cd libiconv-win-build
   - if %build_suite%==msvc2015 cd build-VS2015
-  - if %build_suite%==msvc2015 msbuild libiconv.sln /p:Configuration="Release" /p:Platform="Win32" /:clp:ErrorsOnly
+  - if %build_suite%==msvc2015 msbuild libiconv.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
   - if %build_suite%==msvc2017 cd build-VS2017
-  - if %build_suite%==msvc2017 msbuild libiconv.sln /p:Configuration="Release" /p:Platform="x64" /:clp:ErrorsOnly
+  - if %build_suite%==msvc2017 msbuild libiconv.sln /p:Configuration="Release" /p:Platform="x64" /clp:ErrorsOnly
   - if not %build_tool%==mingw md installdir
   - if not %build_tool%==mingw md installdir\bin
   - if not %build_tool%==mingw md installdir\lib
