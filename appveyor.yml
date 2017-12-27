@@ -63,13 +63,14 @@ build_script:
   - if %build_suite%==msvc2015 msbuild libiconv.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
   - if %build_suite%==msvc2017 cd build-VS2017
   - if %build_suite%==msvc2017 msbuild libiconv.sln /p:Configuration="Release" /p:Platform="x64" /clp:ErrorsOnly
-  - if not %build_tool%==mingw dir /s
   - if not %build_tool%==mingw md installdir
   - if not %build_tool%==mingw md installdir\bin
   - if not %build_tool%==mingw md installdir\lib
-  - if %build_tool%==msvc2015 copy Win32\Release\libiconv.dll installdir\bin\libiconv.dll
-  - if %build_suite%==msvc2015 copy Win32\Release\libiconv.lib installdir\lib\libiconv.lib
+  - if %build_tool%==msvc2015 copy Release\libiconv.dll installdir\bin\libiconv.dll
+  - if %build_tool%==msvc2015 copy Release\libiconv.pdb installdir\bin\libiconv.pdb
+  - if %build_suite%==msvc2015 copy Release\libiconv.lib installdir\lib\libiconv.lib
   - if %build_suite%==msvc2017 copy x64\Release\libiconv.dll installdir\bin\libiconv.dll
+  - if %build_suite%==msvc2017 copy x64\Release\libiconv.pdb installdir\bin\libiconv.pdb
   - if %build_suite%==msvc2017 copy x64\Release\libiconv.lib installdir\bin\libiconv.lib
   - if not %build_tool%==mingw set PATH=%cd%\installdir\bin
   - if not %build_tool%==mingw set LIB=%cd%\installdir\lib
