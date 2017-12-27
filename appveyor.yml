@@ -72,9 +72,9 @@ build_script:
   - if %build_suite%==msvc2017 copy x64\Release\libiconv.dll installdir\bin\libiconv.dll
   - if %build_suite%==msvc2017 copy x64\Release\libiconv.pdb installdir\bin\libiconv.pdb
   - if %build_suite%==msvc2017 copy x64\Release\libiconv.lib installdir\bin\libiconv.lib
-  - if not %build_tool%==mingw set PATH=%cd%\installdir\bin
-  - if not %build_tool%==mingw set LIB=%cd%\installdir\lib
-  - if not %build_tool%==mingw set INCLUDE=%cd%\..\include
+  - if not %build_tool%==mingw set PATH=%cd%\installdir\bin;%PATH%
+  - if not %build_tool%==mingw set LIB=%cd%\installdir\lib;%LIB%
+  - if not %build_tool%==mingw set INCLUDE=%cd%\..\include;%INCLUDE%
   - if not %build_tool%==mingw cd installdir
   - if not %build_tool%==mingw 7z a libiconv-%build_suite%.zip *
   - if not %build_tool%==mingw mv libiconv-%build_suite%.zip %APPVEYOR_BUILD_FOLDER%
