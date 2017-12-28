@@ -165,7 +165,7 @@ build_script:
   - if %build_tool%==mingw set LIBBAK=%LIB%
   - if %build_tool%==mingw set LIB=-Lc:/dev/libiconv-win-build/libiconv-1.15/installdir/lib
   - if %build_tool%==mingw set
-  - if %build_tool%==mingw cscript configure.js compiler=mingw prefix=%cd%\installdir debug=no
+  - if %build_tool%==mingw cscript configure.js compiler=mingw prefix=%cd%\installdir debug=no http=no ftp=no
   - if %build_tool%==mingw set
   - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe install -f Makefile.mingw
   - if %build_tool%==mingw set INCLUDE=%INCLUDEBAK%
