@@ -163,6 +163,8 @@ build_script:
   - if %build_tool%==mingw git checkout v2.9.7
   - if %build_tool%==mingw cd win32
   - if %build_tool%==mingw cscript configure.js compiler=mingw prefix=%cd%\installdir debug=no
+# NOTE: need to patch the makefile to build successfully with MinGW
+  - if %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/libxml2/win32 && sed -i -e s/\$\(INCLUDE\)/-I\$\(INCLUDE\)/g Makefile.mingw"
   - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe install -f Makefile.mingw
   - if not %build_tool%==mingw set LIBXML2_LIBRARIES=%cd%\installdir\bin\libxml2.dll
   - if not %build_tool%==mingw set LIBXML2_INCLUDE_DIR=%cd%\installdir\include
