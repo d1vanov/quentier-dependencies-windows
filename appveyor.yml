@@ -28,6 +28,7 @@ environment:
       build_tool: mingw
       build_suite: mingw492_32
       qt: mingw492_32
+      CACHE: C:\cache
 
 clone_folder: c:\dev\quentier-dependencies-windows
 
@@ -305,7 +306,9 @@ build_script:
   - if %build_tool%==mingw cd breakpad
   - if %build_tool%==mingw git checkout pecoff-dwarf-on-git-20171117
   - if %build_tool%==mingw git reset --hard 797ba26
-  - if %build_suite%==mingw492_32 C:\cygwin\bin\bash -lc "cd /cygdrive/c/dev/breakpad && ./fetch-externals && export HOST=i686-w64-mingw32 && sh scripts/appveyor-gcc.sh"
+  - if %build_tool%==mingw scripts\appveyor-gcc.bat install
+  - if %build_suite%==mingw492_32 C:\cygwin\bin\bash -lc "cd /cygdrive/c/dev/breakpad && export HOST=i686-w64-mingw32 && sh scripts/appveyor-gcc.sh"
+  - if %build_tool%==mingw scripts\appveyor-gcc.bat test_script
   - if %build_tool%==mingw mv staging\usr installdir
 # Finalization
   - cd installdir
@@ -331,6 +334,9 @@ build_script:
   - if %build_tool%==mingw cd mingw_installdir
   - if %build_tool%==mingw 7z a boost_mingw.zip *
   - if %build_tool%==mingw mv boost_mingw.zip %APPVEYOR_BUILD_FOLDER%
+
+cache:
+  - C:\cache
 
 artifacts:
   - path: '*.zip'
