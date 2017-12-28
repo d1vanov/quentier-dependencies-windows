@@ -305,7 +305,7 @@ build_script:
   - if %build_tool%==mingw cd breakpad
   - if %build_tool%==mingw git checkout pecoff-dwarf-on-git-20171117
   - if %build_tool%==mingw git reset --hard 797ba26
-  - if %build_suite%==mingw492_32 C:\cygwin\bin\bash -lc "cd /cygdrive/c/dev/breakpad && ./fetch_externals && export HOST=i686-w64-mingw32 && sh scripts/appveyor-gcc.sh"
+  - if %build_suite%==mingw492_32 C:\cygwin\bin\bash -lc "cd /cygdrive/c/dev/breakpad && ./fetch-externals && export HOST=i686-w64-mingw32 && sh scripts/appveyor-gcc.sh"
   - if %build_tool%==mingw mv staging\usr installdir
 # Finalization
   - cd installdir
