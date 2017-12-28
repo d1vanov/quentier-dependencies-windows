@@ -210,6 +210,26 @@ build_script:
   - if not %build_tool%==mingw set HUNSPELL_LIBRARIES %cd%\lib\libhunspell.lib
   - 7z a libhunspell-%build_suite%_%arch_name%.zip *
   - mv libhunspell-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
+# tidy-html5
+  - cd c:\dev
+  - echo "Building tidy-html5"
+  - git clone https://github.com/htacg/tidy-html5.git
+  - cd tidy-html5
+  - git checkout 5.6.0
+  - md build-tidy
+  - cd build-tidy
+  - if %build_tool%==mingw set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
+  - if not %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/tidy-html5 && echo 'install(FILES $<TARGET_PDB_FILE:${name}> DESTINATION bin OPTIONAL)' >> CMakeLists.txt"
+  - cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIB=ON -DCMAKE_INSTALL_PREFIX="c:\dev\tidy-html5\build-tidy\installdir"
+  - cmake --build . --target all
+  - cmake --build . --target install
+# Finalization
+  - cd installdir
+  - set PATH=%PATH%;%cd%\bin
+  - set LIB=%LIB%;%cd%\lib
+  - set INCLUDE=%INCLUDE%;%cd%\include
+  - 7z a tidy-html5-%build_suite%_%arch_name%.zip *
+  - mv tidy-html5-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
 
 artifacts:
   - path: '*.zip'
