@@ -134,6 +134,44 @@ build_script:
   - set INCLUDE=%cd%\include;%INCLUDE%
   - 7z a zlib-%build_suite%_%arch_name%.zip *
   - mv zlib-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
+# libxml2
+  - cd c:\dev
+  - echo "Building libxml2"
+# MSVC branch
+  - if not %build_tool%==mingw git clone https://github.com/kiyolee/libxml2-win-build.git libxml2-win-build
+  - if not %build_tool%==mingw cd libxml2-win-build
+  - if %build_suite%==msvc2015 cd build-VS2015
+  - if %build_suite%==msvc2015 msbuild libxml2.sln /p:Configuration="Release" /p:Platform="x86" /clp:ErrorsOnly
+  - if %build_suite%==msvc2017 cd build-VS2017
+  - if %build_suite%==msvc2017 msbuild libxml2.sln /p:Configuration="Release" /p:Platform="x64" /clp:ErrorsOnly
+  - if not %build_tool%==mingw md installdir
+  - if not %build_tool%==mingw md installdir\include
+  - if not %build_tool%==mingw md installdir\bin
+  - if not %build_tool%==mingw md installdir\lib
+  - if %build_suite%==msvc2015 copy Release\libxml2.dll installdir\bin\libxml2.dll
+  - if %build_suite%==msvc2015 copy Release\libxml2.lib installdir\lib\libxml2.lib
+  - if %build_suite%==msvc2017 copy x64\Release\libxml2.dll installdir\bin\libxml2.dll
+  - if %build_suite%==msvc2017 copy x64\Release\libxml2.lib installdir\lib\libxml2.lib
+  - if not %build_tool%==mingw xcopy ..\include installdir\include /e
+  - if not %build_tool%==mingw set LIBXML2_LIBRARIES=%cd%\installdir\lib\libxml2.lib
+  - if not %build_tool%==mingw set LIBXML2_INCLUDE_DIR=%cd%\installdir\include
+# MinGW branch
+  - if %build_tool%==mingw git clone git://git.gnome.org/libxml2
+  - if %build_tool%==mingw cd libxml2
+  - if %build_tool%==mingw git checkout v2.9.7
+  - if %build_tool%==mingw cd win32
+  - if %build_tool%==mingw cscript configure.js compiler=mingw prefix=%cd%\installdir debug=no
+  - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe install -f Makefile.mingw
+  - if not %build_tool%==mingw set LIBXML2_LIBRARIES=%cd%\installdir\bin\libxml2.dll
+  - if not %build_tool%==mingw set LIBXML2_INCLUDE_DIR=%cd%\installdir\include
+# Finalization
+  - cd installdir
+  - dir /s
+  - set PATH=%cd%\bin;%PATH%
+  - set LIB=%cd%\lib;%LIB%
+  - set INCLUDE=%cd%\include;%INCLUDE%
+  - 7z a libxml2-%build_suite%_%arch_name%.zip *
+  - mv libxml2-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
 
 artifacts:
   - path: '*.zip'
