@@ -161,20 +161,17 @@ build_script:
   - if %build_tool%==mingw git checkout v2.9.7
   - if %build_tool%==mingw cd win32
   - if %build_tool%==mingw set INCLUDEBAK=%INCLUDE%
-  - if %build_tool%==mingw set INCLUDE= 
+  - if %build_tool%==mingw set INCLUDE=-Ic:/dev/libiconv-win-build/libiconv-1.15/installdir/include
   - if %build_tool%==mingw set LIBBAK=%LIB%
-  - if %build_tool%==mingw set LIB= 
+  - if %build_tool%==mingw set LIB=-Lc:/dev/libiconv-win-build/libiconv-1.15/installdir/lib
   - if %build_tool%==mingw set
-  - if %build_tool%==mingw cscript configure.js compiler=mingw prefix=%cd%\installdir include=c:/dev/libiconv-win-build/libiconv-1.15/installdir/include lib=c:/dev/libiconv-win-build/libiconv-1.15/installdir/lib debug=no
+  - if %build_tool%==mingw cscript configure.js compiler=mingw prefix=%cd%\installdir debug=no
   - if %build_tool%==mingw set
   - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe install -f Makefile.mingw
   - if %build_tool%==mingw set INCLUDE=%INCLUDEBAK%
-  - if %build_tool%==mingw set INCLUDEBAK= 
   - if %build_tool%==mingw set LIB=%LIBBAK%
-  - if %build_tool%==mingw set LIBBAK= 
-
-  - if not %build_tool%==mingw set LIBXML2_LIBRARIES=%cd%\installdir\bin\libxml2.dll
-  - if not %build_tool%==mingw set LIBXML2_INCLUDE_DIR=%cd%\installdir\include
+  - if %build_tool%==mingw set LIBXML2_LIBRARIES=%cd%\installdir\bin\libxml2.dll
+  - if %build_tool%==mingw set LIBXML2_INCLUDE_DIR=%cd%\installdir\include
 # Finalization
   - cd installdir
   - dir /s
