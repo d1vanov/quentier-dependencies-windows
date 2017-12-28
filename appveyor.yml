@@ -260,7 +260,7 @@ build_script:
   - mv qtkeychain-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
 # Google breakpad
   - cd c:\dev
-  - "Building breakpad"
+  - echo "Building breakpad"
 # MSVC branch
   - if not %build_tool%==mingw git clone https://chromium.googlesource.com/breakpad/breakpad
   - if not %build_tool%==mingw cd breakpad
