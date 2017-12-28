@@ -193,8 +193,8 @@ build_script:
   - if %build_suite%==msvc2015 copy msvc\Release_dll\libhunspell\libhunspell.lib installdir\lib\
   - if %build_suite%==msvc2015 copy msvc\Release_dll\libhunspell\libhunspell.dll installdir\bin\
   - if %build_suite%==msvc2017 MSBuild %cd%\msvc\Hunspell.sln /p:Configuration="Release_dll" /p:Platform="x64" /clp:ErrorsOnly
-  - if %build_suite%==msvc2017 copy msvc\x64\Release_dll\libhunspell\libhunspell.lib installdir\lib\
-  - if %build_suite%==msvc2017 copy msvc\x64\Release_dll\libhunspell\libhunspell.dll installdir\bin\
+  - if %build_suite%==msvc2017 copy msvc\x64\Release_dll\libhunspell.lib installdir\lib\
+  - if %build_suite%==msvc2017 copy msvc\x64\Release_dll\libhunspell.dll installdir\bin\
   - if not %build_tool%==mingw xcopy src\hunspell installdir\include\hunspell /e
 # MinGW branch
 # NOTE: need to apply a small patch for building with MinGW
