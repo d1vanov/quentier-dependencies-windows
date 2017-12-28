@@ -309,9 +309,12 @@ build_script:
  - if %build_tool%==mingw cd breakpad
  - if %build_tool%==mingw git checkout pecoff-dwarf-on-git-20171117
  - if %build_tool%==mingw git reset --hard 797ba26
- - if %build_tool%==mingw scripts\appveyor-gcc.bat install
- - if %build_tool%==mingw scripts\appveyor-gcc.bat build_script
- - if %build_tool%==mingw scripts\appveyor-gcc.bat test_script
+ - if %build_tool%==mingw set APPVEYOR_BUILD_FOLDER_BAK=%APPVEYOR_BUILD_FOLDER%
+ - if %build_tool%==mingw set APPVEYOR_BUILD_FOLDER=%cd%
+ - if %build_tool%==mingw call scripts\appveyor-gcc.bat install
+ - if %build_tool%==mingw call scripts\appveyor-gcc.bat build_script
+ - if %build_tool%==mingw call scripts\appveyor-gcc.bat test_script
+ - if %build_tool%==mingw set APPVEYOR_BUILD_FOLDER=%APPVEYOR_BUILD_FOLDER_BAK%
  - if %build_tool%==mingw mv staging\usr installdir
 # Finalization
  - cd installdir
