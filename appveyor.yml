@@ -165,6 +165,8 @@ build_script:
   - if %build_tool%==mingw cd libxml2
   - if %build_tool%==mingw git checkout v2.9.7
   - if %build_tool%==mingw cd win32
+# NOTE: need to rename the import library for libxml2.dll
+  - if %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/libxml2/win32 && sed -i -e s/\$\(XML_BASENAME\)\.lib/\$\(XML_BASENAME\).dll.a/g Makefile.mingw"
   - if %build_tool%==mingw set INCLUDEBAK=%INCLUDE%
   - if %build_tool%==mingw set INCLUDE=-Ic:/dev/libiconv-win-build/libiconv-1.15/installdir/include
   - if %build_tool%==mingw set LIBBAK=%LIB%
@@ -175,6 +177,9 @@ build_script:
   - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe install -f Makefile.mingw
   - if %build_tool%==mingw set INCLUDE=%INCLUDEBAK%
   - if %build_tool%==mingw set LIB=%LIBBAK%
+# NOTE: removing the statuc libxml2.a library as CMake seems to prefer it over the shared library yet this statuc library
+# requires the target application to explicitly link to libiconv which is not desired
+  - if %build_tool%==mingw del installdir\lib\libxml2.a
 # Finalization
   - cd installdir
   - set PATH=%cd%\bin;%PATH%
