@@ -298,10 +298,10 @@ build_script:
   - if not %build_tool%==mingw copy c:\dev\breakpad\installdir\lib\crash_generation_server.lib c:\dev\breakpad\installdir\lib\crash_generation_server_d.lib
   - if not %build_tool%==mingw copy c:\dev\breakpad\installdir\lib\exception_handler.lib c:\dev\breakpad\installdir\lib\exception_handler_d.lib
   - if not %build_tool%==mingw cd c:\dev\breakpad\installdir\bin
-  - if not %build_tool%==mingw curl -fsSL https://github.com/d1vanov/quentier-dependencies-windows/raw/master/breakpad/minidump_stackwalk.exe -o minidump_stackwalk.exe
-  - if not %build_tool%==mingw curl -fsSL https://github.com/d1vanov/quentier-dependencies-windows/raw/master/breakpad/cygwin1.dll -o cygwin1.dll
-  - if not %build_tool%==mingw curl -fsSL https://github.com/d1vanov/quentier-dependencies-windows/raw/master/breakpad/cygstdc++-6.dll -o cygstdc++-6.dll
-  - if not %build_tool%==mingw curl -fsSL https://github.com/d1vanov/quentier-dependencies-windows/raw/master/breakpad/cyggcc_s-1.dll -o cyggcc_s-1.dll
+  - if not %build_tool%==mingw curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/minidump_stackwalk.exe -o minidump_stackwalk.exe
+  - if not %build_tool%==mingw curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cygwin1.dll -o cygwin1.dll
+  - if not %build_tool%==mingw curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cygstdc++-6.dll -o cygstdc++-6.dll
+  - if not %build_tool%==mingw curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cyggcc_s-1.dll -o cyggcc_s-1.dll
   - if not %build_tool%==mingw cd c:\dev\breakpad
 # MinGW branch
   - if %build_tool%==mingw md breakpad
