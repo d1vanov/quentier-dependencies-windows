@@ -81,7 +81,7 @@ build_script:
   - if %build_suite%==msvc2015 copy Release\libiconv.lib installdir\lib\libiconv.lib
   - if %build_suite%==msvc2017 copy x64\Release\libiconv.dll installdir\bin\libiconv.dll
   - if %build_suite%==msvc2017 copy x64\Release\libiconv.pdb installdir\bin\libiconv.pdb
-  - if %build_suite%==msvc2017 copy x64\Release\libiconv.lib installdir\bin\libiconv.lib
+  - if %build_suite%==msvc2017 copy x64\Release\libiconv.lib installdir\lib\libiconv.lib
   - if not %build_tool%==mingw copy ..\include\iconv.h installdir\include
 # MinGW branch
   - if %build_tool%==mingw md libiconv-win-build
