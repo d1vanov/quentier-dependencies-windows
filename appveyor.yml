@@ -235,6 +235,7 @@ build_script:
   - cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIB=ON -DCMAKE_INSTALL_PREFIX="c:\dev\tidy-html5\build-tidy\installdir"
   - cmake --build . --target all
   - cmake --build . --target install
+  - dir /s
   - if %build_tool%==mingw set PATH=%PATH%;C:\Program Files\Git\usr\bin
 # Finalization
   - cd installdir
@@ -294,6 +295,9 @@ build_script:
   - if not %build_tool%==mingw cd src\client\windows
   - if %build_suite%==msvc2015 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="Win32"
   - if %build_suite%==msvc2017 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="x64"
+  - if %build_suite%==msvc2015 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="Win32"
+  - if %build_suite%==msvc2017 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="x64"
+  - dir /s
   - if not %build_tool%==mingw copy Release\lib\common.lib c:\dev\breakpad\installdir\lib
   - if not %build_tool%==mingw copy Release\lib\crash_generation_client.lib c:\dev\breakpad\installdir\lib
   - if not %build_tool%==mingw copy Release\lib\crash_generation_server.lib c:\dev\breakpad\installdir\lib
