@@ -287,23 +287,33 @@ build_script:
   - if not %build_tool%==mingw md installdir\include\breakpad\common\windows
   - if not %build_tool%==mingw md installdir\lib
   - if not %build_tool%==mingw md installdir\bin
-  - if not %build_tool%==mingw copy src\tools\windows\binaries\dump_syms.exe installdir\bin
   - if not %build_tool%==mingw xcopy src installdir\include\breakpad /e
   - |
     if not %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/breakpad/src/build && sed -i -e \"s/'WarnAsError': 'true'/'WarnAsError': 'false'/g\" common.gypi"
-  - if not %build_tool%==mingw ..\gyp\gyp.bat src\client\windows\breakpad_client.gyp --no-circular-check -Dwin_release_RuntimeLibrary=2 -Dwin_debug_RuntimeLibrary=2
+  - if not %build_tool%==mingw ..\gyp\gyp.bat src\client\windows\breakpad_client.gyp --no-circular-check -Dwin_release_RuntimeLibrary=2 -Dwin_debug_RuntimeLibrary=3
   - if not %build_tool%==mingw cd src\client\windows
-  - if %build_suite%==msvc2015 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="Win32"
-  - if %build_suite%==msvc2017 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="x64"
-  - if not %build_tool%==mingw dir /s
+  - if %build_suite%==msvc2015 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
+  - if %build_suite%==msvc2015 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="Win32" /clp:ErrorsOnly
+  - if %build_suite%==msvc2017 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="x64" /clp:ErrorsOnly
+  - if %build_suite%==msvc2017 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="x64" /clp:ErrorsOnly
   - if not %build_tool%==mingw copy Release\lib\common.lib c:\dev\breakpad\installdir\lib
   - if not %build_tool%==mingw copy Release\lib\crash_generation_client.lib c:\dev\breakpad\installdir\lib
   - if not %build_tool%==mingw copy Release\lib\crash_generation_server.lib c:\dev\breakpad\installdir\lib
   - if not %build_tool%==mingw copy Release\lib\exception_handler.lib c:\dev\breakpad\installdir\lib
-  - if not %build_tool%==mingw copy c:\dev\breakpad\installdir\lib\common.lib c:\dev\breakpad\installdir\lib\common_d.lib
-  - if not %build_tool%==mingw copy c:\dev\breakpad\installdir\lib\crash_generation_client.lib c:\dev\breakpad\installdir\lib\crash_generation_client_d.lib
-  - if not %build_tool%==mingw copy c:\dev\breakpad\installdir\lib\crash_generation_server.lib c:\dev\breakpad\installdir\lib\crash_generation_server_d.lib
-  - if not %build_tool%==mingw copy c:\dev\breakpad\installdir\lib\exception_handler.lib c:\dev\breakpad\installdir\lib\exception_handler_d.lib
+  - if not %build_tool%==mingw copy Debug\lib\common.lib c:\dev\breakpad\installdir\lib\common_d.lib
+  - if not %build_tool%==mingw copy Debug\lib\crash_generation_client.lib c:\dev\breakpad\installdir\lib\crash_generation_client_d.lib
+  - if not %build_tool%==mingw copy Debug\lib\crash_generation_server.lib c:\dev\breakpad\installdir\lib\crash_generation_server_d.lib
+  - if not %build_tool%==mingw copy Debug\lib\exception_handler.lib c:\dev\breakpad\installdir\lib\exception_handler_d.lib
+  - if not %build_tool%==mingw copy Debug\common.pdb c:\dev\breakpad\installdir\lib\
+  - if not %build_tool%==mingw copy Debug\crash_generation_client.pdb c:\dev\breakpad\installdir\lib\
+  - if not %build_tool%==mingw copy Debug\crash_generation_server.pdb c:\dev\breakpad\installdir\lib\
+  - if not %build_tool%==mingw copy Debug\exception_handler.pdb c:\dev\breakpad\installdir\lib\
+  - if not %build_tool%==mingw cd c:\dev\breakpad
+  - if not %build_tool%==mingw ..\gyp\gyp.bat src\tools\windows\tools_windows.gyp --no-circular-check -Dwin_release_RuntimeLibrary=2 -Dwin_debug_RuntimeLibrary=3
+  - if not %build_tool%==mingw cd src\tools\windows
+  - if %build_suite%==msvc2015 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
+  - if %build_suite%==msvc2017 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="x64"  /clp:ErrorsOnly
+  - if not %build_tool%==mingw copy Release\dump_syms.exe c:\dev\breakpad\installdir\bin
   - if not %build_tool%==mingw cd c:\dev\breakpad\installdir\bin
   - if not %build_tool%==mingw curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/minidump_stackwalk.exe -o minidump_stackwalk.exe
   - if not %build_tool%==mingw curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cygwin1.dll -o cygwin1.dll
