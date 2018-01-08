@@ -251,7 +251,7 @@ build_script:
   - cd c:\dev\qtkeychain
   - git checkout v0.8.0
   - if %build_suite%==mingw492_32 C:\msys64\usr\bin\bash -lc "cd /c/dev/qtkeychain && sed -i s/SecureZeroMemory/ZeroMemory/g keychain_win.cpp"
-  - if %build_suite%==mingw492_32 C:\msys64\usr\bin\bash -lc "cd /c/dev/qtkeychain && sed -i -e 's/\!USE_CREDENTIAL_STORE/NOT USE_CREDENTIAL_STORE/g' CMakeLists.txt"
+  - C:\msys64\usr\bin\bash -lc "cd /c/dev/qtkeychain && sed -i -e 's/\!USE_CREDENTIAL_STORE/NOT USE_CREDENTIAL_STORE/g' CMakeLists.txt"
   - md build
   - cd build
   - if %build_tool%==mingw set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
