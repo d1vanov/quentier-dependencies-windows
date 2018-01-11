@@ -322,7 +322,7 @@ build_script:
   - if not %build_tool%==mingw cd c:\dev\breakpad
 # MinGW branch
   # Not sure why this is needed but otherwise build throws errors, see https://stackoverflow.com/questions/9300722/cygwin-error-bash-fork-retry-resource-temporarily-unavailable/14509551#14509551
-  - if %build_tool%==mingw C:\cygwin\bin\dash.exe -lc "cd /usr/bin && /usr/bin/perflags * -d 1 && /usr/bin/rebaseall -v"
+  - if %build_tool%==mingw C:\cygwin\bin\dash.exe -lc "cd /usr/bin && /usr/bin/peflags * -d 1 && /usr/bin/rebaseall -v"
   - if %build_tool%==mingw md breakpad
   - if %build_tool%==mingw git clone https://github.com/jon-turney/google-breakpad.git breakpad
   - if %build_tool%==mingw cd breakpad
