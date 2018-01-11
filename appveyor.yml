@@ -352,11 +352,17 @@ build_script:
   - if %build_tool%==mingw set PATH=%cd%;%PATH%
   - if %build_tool%==mingw cd ..\..\
   - if %build_tool%==mingw b2 --prefix=%cd%\mingw_installdir --build-dir=%cd%\mingw_builddir --with-program_options toolset=gcc link=shared install
-  - if %build_tool%==mingw set PATH=C:\Libraries\boost_1_63_0\mingw_installdir\lib;%PATH%
-  - if %build_tool%==mingw set LIB=C:\Libraries\boost_1_63_0\mingw_installdir\lib;%LIB%
-  - if %build_tool%==mingw set INCLUDE=C:\Libraries\boost_1_63_0\mingw_installdir\include\boost_1_63;%INCLUDE%
-# Finalization
+# Rearrange the location of some stuff within the installation dir
   - if %build_tool%==mingw cd mingw_installdir
+  - if %build_tool%==mingw move include\boost-1_63\boost include
+  - if %build_tool%==mingw rmdir include\boost-1_63
+  - if %build_tool%==mingw md bin
+  - if %build_tool%==mingw move lib\libboost_program_options-mgw53-mt-d-1_63.dll bin\
+  - if %build_tool%==mingw move lib\libboost_program_options-mgw53-mt-1_63.dll bin\
+  - if %build_tool%==mingw set PATH=C:\Libraries\boost_1_63_0\mingw_installdir\bin;%PATH%
+  - if %build_tool%==mingw set LIB=C:\Libraries\boost_1_63_0\mingw_installdir\lib;%LIB%
+  - if %build_tool%==mingw set INCLUDE=C:\Libraries\boost_1_63_0\mingw_installdir\include;%INCLUDE%
+# Finalization
   - if %build_tool%==mingw 7z a boost_mingw.zip *
   - if %build_tool%==mingw mv boost_mingw.zip %APPVEYOR_BUILD_FOLDER%
 
