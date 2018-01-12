@@ -68,15 +68,16 @@ build_script:
   - git clone https://github.com/openssl/openssl.git
   - cd openssl
   - git checkout OpenSSL_1_0_2n
-  - if %build_suite%==msvc2015 perl Configure VC-WIN32 no-asm
-  - if %build_suite%==msvc2017 perl Configure VC-WIN64 no-asm
-  - if %build_tool%==mingw perl Configure mingw no-asm
-  - if not %build_tool%==mingw nmake 2>&1
-  - if not %build_tool%==mingw nmake test 2>&1
-  - if not %build_tool%==mingw nmake install DESTDIR=%cd%\installdir 2>&1
-  - if %build_tool%==mingw mingw32-make 2>&1
-  - if %build_tool%==mingw mingw32-make test 2>&1
-  - if %build_tool%==mingw mingw32-make install DESTDIR=%cd%\installdir 2>&1
+  - if %build_suite%==msvc2015 perl Configure VC-WIN32 no-asm --prefix=%cd%\installdir
+  - if %build_suite%==msvc2017 perl Configure VC-WIN64 no-asm --prefix=%cd%\installdir
+  - if not %build_tool%==mingw ms\do_ms
+  - if not %build_tool%==mingw nmake -f ms\ntdll.mak
+  - if not %build_tool%==mingw nmake -f ms\ntdll.mak test
+  - if not %build_tool%==mingw nmake -f ms\ntdll.mak install
+  - if %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/openssl && ./Configure --prefix=/c/dev/openssl/installdir"
+  - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe
+  - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe test
+  - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe install
 # Finalization
   - cd installdir
   - set PATH=%cd%\bin;%PATH%
