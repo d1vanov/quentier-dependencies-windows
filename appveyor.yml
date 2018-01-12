@@ -69,10 +69,14 @@ build_script:
   - cd openssl
   - git checkout OpenSSL_1_0_2n
   - if %build_suite%==msvc2015 perl Configure VC-WIN32 no-asm --prefix=%cd%\installdir
+  - if %build_suite%==msvc2015 ms\do_ms
   - if %build_suite%==msvc2017 perl Configure VC-WIN64A no-asm --prefix=%cd%\installdir
-  - if not %build_tool%==mingw ms\do_ms
+  - if %build_suite%==msvc2017 ms\do_win64a
   - if not %build_tool%==mingw nmake -f ms\ntdll.mak
-  - if not %build_tool%==mingw nmake -f ms\ntdll.mak test
+  - if %build_suite%==msvc2015 nmake -f ms\ntdll.mak test
+  - if %build_suite%==msvc2017 cd out32dll
+  - if %build_suite%==msvc2017 ..\ms\test
+  - if %build_suite%==msvc2017 cd ..
   - if not %build_tool%==mingw nmake -f ms\ntdll.mak install
   - if %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/openssl && ./Configure --prefix=/c/dev/openssl/installdir"
   - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe
