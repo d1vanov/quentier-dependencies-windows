@@ -69,7 +69,7 @@ build_script:
   - cd openssl
   - git checkout OpenSSL_1_0_2n
   - if %build_suite%==msvc2015 perl Configure VC-WIN32 no-asm --prefix=%cd%\installdir
-  - if %build_suite%==msvc2017 perl Configure VC-WIN64a no-asm --prefix=%cd%\installdir
+  - if %build_suite%==msvc2017 perl Configure VC-WIN64A no-asm --prefix=%cd%\installdir
   - if not %build_tool%==mingw ms\do_ms
   - if not %build_tool%==mingw nmake -f ms\ntdll.mak
   - if not %build_tool%==mingw nmake -f ms\ntdll.mak test
