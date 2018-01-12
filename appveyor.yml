@@ -78,7 +78,7 @@ build_script:
   - if %build_suite%==msvc2017 ..\ms\test
   - if %build_suite%==msvc2017 cd ..
   - if not %build_tool%==mingw nmake -f ms\ntdll.mak install
-  - if %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/openssl && ./Configure --prefix=/c/dev/openssl/installdir"
+  - if %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/openssl && ./Configure mingw no-asm --prefix=/c/dev/openssl/installdir"
   - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe
   - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe test
   - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe install
