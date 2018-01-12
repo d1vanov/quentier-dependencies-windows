@@ -62,8 +62,32 @@ install:
   - ps: if ($env:prepare_mode -eq "YES") { throw "Failing in order to stop the current build matrix job early" }
 
 build_script:
+# openssl
   - cd c:\dev
+  - echo "Building openssl"
+  - git clone https://github.com/openssl/openssl.git
+  - cd openssl
+  - git checkout OpenSSL_1_0_2n
+  - mkdir build
+  - cd build
+  - if %build_suite%==msvc2015 perl ..\Configure VC-WIN32 no-asm --prefix=%cd%\installdir
+  - if %build_suite%==msvc2017 perl ..\Configure VC-WIN64 no-asm --prefix=%cd%\installdir
+  - if %build_tool%==mingw perl ..\Configure mingw no-asm --prefix=%cd%\installdir
+  - if not %build_tool%==mingw nmake 2>&1
+  - if not %build_tool%==mingw nmake test 2>&1
+  - if not %build_tool%==mingw nmake install 2>&1
+  - if %build_tool%==mingw mingw32-make 2>&1
+  - if %build_tool%==mingw mingw32-make test 2>&1
+  - if %build_tool%==mingw mingw32-make install 2>&1
+# Finalization
+  - cd installdir
+  - set PATH=%cd%\bin;%PATH%
+  - set LIB=%cd%\lib;%LIB%
+  - set INCLUDE=%cd%\include;%INCLUDE%
+  - 7z a openssl-%build_suite%_%arch_name%.zip *
+  - mv openssl-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
 # libiconv
+  - cd c:\dev
   - echo "Building libiconv"
 # MSVC branch
   - if not %build_tool%==mingw git clone https://github.com/kiyolee/libiconv-win-build.git libiconv-win-build
