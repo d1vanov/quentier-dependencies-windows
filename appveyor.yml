@@ -68,11 +68,9 @@ build_script:
   - git clone https://github.com/openssl/openssl.git
   - cd openssl
   - git checkout OpenSSL_1_0_2n
-  - mkdir build
-  - cd build
-  - if %build_suite%==msvc2015 perl ..\Configure VC-WIN32 no-asm
-  - if %build_suite%==msvc2017 perl ..\Configure VC-WIN64 no-asm
-  - if %build_tool%==mingw perl ..\Configure mingw no-asm
+  - if %build_suite%==msvc2015 perl Configure VC-WIN32 no-asm
+  - if %build_suite%==msvc2017 perl Configure VC-WIN64 no-asm
+  - if %build_tool%==mingw perl Configure mingw no-asm
   - if not %build_tool%==mingw nmake 2>&1
   - if not %build_tool%==mingw nmake test 2>&1
   - if not %build_tool%==mingw nmake install DESTDIR=%cd%\installdir 2>&1
