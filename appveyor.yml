@@ -70,15 +70,15 @@ build_script:
   - git checkout OpenSSL_1_0_2n
   - mkdir build
   - cd build
-  - if %build_suite%==msvc2015 perl ..\Configure VC-WIN32 no-asm --prefix=%cd%\installdir
-  - if %build_suite%==msvc2017 perl ..\Configure VC-WIN64 no-asm --prefix=%cd%\installdir
-  - if %build_tool%==mingw perl ..\Configure mingw no-asm --prefix=%cd%\installdir
+  - if %build_suite%==msvc2015 perl ..\Configure VC-WIN32 no-asm
+  - if %build_suite%==msvc2017 perl ..\Configure VC-WIN64 no-asm
+  - if %build_tool%==mingw perl ..\Configure mingw no-asm
   - if not %build_tool%==mingw nmake 2>&1
   - if not %build_tool%==mingw nmake test 2>&1
-  - if not %build_tool%==mingw nmake install 2>&1
+  - if not %build_tool%==mingw nmake install DESTDIR=%cd%\installdir 2>&1
   - if %build_tool%==mingw mingw32-make 2>&1
   - if %build_tool%==mingw mingw32-make test 2>&1
-  - if %build_tool%==mingw mingw32-make install 2>&1
+  - if %build_tool%==mingw mingw32-make install DESTDIR=%cd%\installdir 2>&1
 # Finalization
   - cd installdir
   - set PATH=%cd%\bin;%PATH%
