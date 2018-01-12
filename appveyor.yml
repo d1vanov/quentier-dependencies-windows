@@ -12,17 +12,17 @@ environment:
      arch_name: none
      build_tool: none
      build_suite: none
-   - prepare_mode: NO
-     arch_name: x86
-     build_tool: msvc
-     build_suite: msvc2015
-     qt: msvc2015
-   - prepare_mode: NO
-     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-     arch_name: x64
-     build_tool: msvc
-     build_suite: msvc2017
-     qt: msvc2017_64
+#   - prepare_mode: NO
+#     arch_name: x86
+#     build_tool: msvc
+#     build_suite: msvc2015
+#     qt: msvc2015
+#   - prepare_mode: NO
+#     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+#     arch_name: x64
+#     build_tool: msvc
+#     build_suite: msvc2017
+#     qt: msvc2017_64
    - prepare_mode: NO
      arch_name: x86
      build_tool: mingw
@@ -78,10 +78,7 @@ build_script:
   - if %build_suite%==msvc2017 ..\ms\test
   - if %build_suite%==msvc2017 cd ..
   - if not %build_tool%==mingw nmake -f ms\ntdll.mak install
-  - if %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/openssl && ./Configure mingw no-asm --prefix=/c/dev/openssl/installdir"
-  - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe
-  - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe test
-  - if %build_tool%==mingw C:\MinGW\bin\mingw32-make.exe install
+  - if %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/openssl && ./Configure mingw no-asm --prefix=/c/dev/openssl/installdir && make && make test && make install"
 # Finalization
   - cd installdir
   - set PATH=%cd%\bin;%PATH%
