@@ -374,11 +374,13 @@ build_script:
   - if %build_tool%==mingw set BOOSTTOOLCHAIN=gcc
   - if %build_suite%==msvc2015 set BOOSTTOOLCHAIN=msvc-14.0
   - if %build_suite%==msvc2017 set BOOSTTOOLCHAIN=msvc-14.1
-  - cd tools\build
+  - if %build_tool%==mingw cd tools\build
   - if %build_tool%==mingw bootstrap.bat gcc
-  - if not %build_tool%==mingw bootstrap.bat msvc
-  - .\b2 --prefix=..\..\b2_installdir install
-  - cd ..\..\b2_installdir\bin
+  - if not %build_tool%==mingw bootstrap.bat
+  - if %build_tool%==mingw .\b2 --prefix=..\..\b2_installdir install
+  - if not %build_tool%==mingw .\b2 --prefix=b2_installdir install
+  - if %build_tool%==mingw cd ..\..\b2_installdir\bin
+  - if not %build_tool%==mingw cd b2_installdir\bin
   - set PATH=%cd%;%PATH%
   - cd ..\..\
   - b2 --prefix=%BOOSTINSTALLDIR% --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared install
