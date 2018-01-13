@@ -66,7 +66,6 @@ build_script:
   - curl -fsSL https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.7z -o boost_1_66_0.7z
   - 7z x boost_1_66_0.7z
   - cd boost_1_66_0
-  - if %build_tool%==mingw set BOOSTINSTALLDIR=%cd%\mingw_installdir else set BOOSTINSTALLDIR=%cd%\msvc_installdir
   - if %build_tool%==mingw set BOOSTBUILDDIR=%cd%\mingw_builddir else set BOOSTBUILDDIR=%cd%\msvc_builddir
   - if %build_tool%==mingw set BOOSTTOOLCHAIN=gcc
   - if %build_suite%==msvc2015 set BOOSTTOOLCHAIN=msvc-14.0
@@ -76,10 +75,9 @@ build_script:
   - if not %build_tool%==mingw bootstrap.bat
   - set PATH=%cd%;%PATH%
   - if %build_tool%==mingw cd ..\..
-  - .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared runtime-link=shared --build-type=complete stage --stagedir=%BOOSTINSTALLDIR% > build_log.txt
+  - .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared runtime-link=shared --build-type=complete stage > build_log.txt
 # Rearrange the location of some stuff within the installation dir
-  - cd %BOOSTINSTALLDIR%
-  - dir /s
+  - cd stage
   - if %build_tool%==mingw move include\boost-1_66\boost include
   - if %build_tool%==mingw rmdir include\boost-1_66
   - if not %build_tool%==mingw md include\boost
