@@ -79,6 +79,7 @@ build_script:
   - .\b2 --prefix=%BOOSTINSTALLDIR% --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared install > build_log.txt
 # Rearrange the location of some stuff within the installation dir
   - cd %BOOSTINSTALLDIR%
+  - dir /s
   - move include\boost-1_66\boost include
   - rmdir include\boost-1_66
   - md bin
