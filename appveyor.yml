@@ -74,13 +74,9 @@ build_script:
   - if %build_tool%==mingw cd tools\build
   - if %build_tool%==mingw bootstrap.bat gcc
   - if not %build_tool%==mingw bootstrap.bat
-  - if %build_tool%==mingw .\b2 --prefix=..\..\b2_installdir install
-  - if not %build_tool%==mingw .\b2 --prefix=b2_installdir install
-  - if %build_tool%==mingw cd ..\..\b2_installdir\bin
-  - if not %build_tool%==mingw cd b2_installdir\bin
   - set PATH=%cd%;%PATH%
-  - cd ..\..\
-  - b2 --prefix=%BOOSTINSTALLDIR% --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared install
+  - if %build_tool%==mingw cd ..\..
+  - .\b2 --prefix=%BOOSTINSTALLDIR% --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared install
 # Rearrange the location of some stuff within the installation dir
   - cd %BOOSTINSTALLDIR%
   - move include\boost-1_66\boost include
