@@ -76,7 +76,7 @@ build_script:
   - if not %build_tool%==mingw bootstrap.bat
   - set PATH=%cd%;%PATH%
   - if %build_tool%==mingw cd ..\..
-  - .\b2 --prefix=%BOOSTINSTALLDIR% --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared install
+  - .\b2 --prefix=%BOOSTINSTALLDIR% --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared install > build_log.txt
 # Rearrange the location of some stuff within the installation dir
   - cd %BOOSTINSTALLDIR%
   - move include\boost-1_66\boost include
