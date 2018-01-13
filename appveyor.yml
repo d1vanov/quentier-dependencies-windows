@@ -75,13 +75,13 @@ build_script:
   - if not %build_tool%==mingw bootstrap.bat
   - set PATH=%cd%;%PATH%
   - if %build_tool%==mingw cd ..\..
-  - .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared runtime-link=shared --build-type=complete stage > build_log.txt
+  - .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared runtime-link=shared --build-type=complete stage >NUL
 # Rearrange the location of some stuff within the installation dir
   - cd stage
   - if %build_tool%==mingw move include\boost-1_66\boost include
   - if %build_tool%==mingw rmdir include\boost-1_66
   - if not %build_tool%==mingw md include\boost
-  - if not %build_tool%==mingw xcopy c:\dev\boost_1_66_0\boost include\boost /e /s
+  - if not %build_tool%==mingw xcopy c:\dev\boost_1_66_0\boost include\boost /e >NUL
   - md bin
   - move lib\*.dll bin\
   - set PATH=%cd%\bin;%PATH%
@@ -100,13 +100,13 @@ build_script:
   - if %build_suite%==msvc2015 ms\do_ms
   - if %build_suite%==msvc2017 perl Configure VC-WIN64A no-asm --prefix=%cd%\installdir
   - if %build_suite%==msvc2017 ms\do_win64a
-  - if not %build_tool%==mingw nmake -f ms\ntdll.mak
-  - if %build_suite%==msvc2015 nmake -f ms\ntdll.mak test
+  - if not %build_tool%==mingw nmake -f ms\ntdll.mak >NUL
+  - if %build_suite%==msvc2015 nmake -f ms\ntdll.mak test >NUL
   - if %build_suite%==msvc2017 cd out32dll
   - if %build_suite%==msvc2017 ..\ms\test
   - if %build_suite%==msvc2017 cd ..
   - if not %build_tool%==mingw nmake -f ms\ntdll.mak install
-  - if %build_tool%==mingw C:\MinGW\msys\1.0\bin\bash -lc "cd /c/dev/openssl && ./Configure mingw no-asm --prefix=/c/dev/openssl/installdir && make && make test && make install"
+  - if %build_tool%==mingw C:\MinGW\msys\1.0\bin\bash -lc "cd /c/dev/openssl && ./Configure mingw no-asm --prefix=/c/dev/openssl/installdir && make > /dev/null && make test > /dev/null && make install"
 # Finalization
   - cd installdir
   - set PATH=%cd%\bin;%PATH%
@@ -211,7 +211,7 @@ build_script:
   - if %build_suite%==msvc2015 copy Release\libxml2.lib installdir\lib\libxml2.lib
   - if %build_suite%==msvc2017 copy x64\Release\libxml2.dll installdir\bin\libxml2.dll
   - if %build_suite%==msvc2017 copy x64\Release\libxml2.lib installdir\lib\libxml2.lib
-  - if not %build_tool%==mingw xcopy ..\include installdir\include /e
+  - if not %build_tool%==mingw xcopy ..\include installdir\include /e >NUL
 # MinGW branch
   - if %build_tool%==mingw git clone git://git.gnome.org/libxml2
   - if %build_tool%==mingw cd libxml2
