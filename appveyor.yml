@@ -70,7 +70,6 @@ build_script:
   - if %build_tool%==mingw set BOOSTTOOLCHAIN=gcc
   - if %build_suite%==msvc2015 set BOOSTTOOLCHAIN=msvc-14.0
   - if %build_suite%==msvc2017 set BOOSTTOOLCHAIN=msvc-14.1
-  - if %build_tool%==mingw cd tools\build
   - if %build_tool%==mingw bootstrap.bat gcc
   - if not %build_tool%==mingw bootstrap.bat
   - set PATH=%cd%;%PATH%
@@ -78,10 +77,8 @@ build_script:
   - .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared runtime-link=shared --build-type=complete stage >NUL
 # Rearrange the location of some stuff within the installation dir
   - cd stage
-  - if %build_tool%==mingw move include\boost-1_66\boost include
-  - if %build_tool%==mingw rmdir include\boost-1_66
-  - if not %build_tool%==mingw md include\boost
-  - if not %build_tool%==mingw xcopy c:\dev\boost_1_66_0\boost include\boost /e >NUL
+  - md include\boost
+  - xcopy c:\dev\boost_1_66_0\boost include\boost /e >NUL
   - md bin
   - move lib\*.dll bin\
   - set PATH=%cd%\bin;%PATH%
