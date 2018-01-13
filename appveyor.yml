@@ -47,8 +47,8 @@ init:
   - if not %build_tool%==mingw (set makefiles="NMake Makefiles") else (set makefiles="MinGW Makefiles")
   - if %build_tool%==mingw set PATH=C:\MinGW\bin;C:\Program Files (x86)\CMake\bin;%PATH%
   - if %arch_name%==x86 set OPENSSL_ROOT_DIR=C:\OpenSSL-Win32 else set OPENSSL_ROOT_DIR=C:\OpenSSL-Win64
-  - if %build_suite%==msvc2017 set PATH="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin";%PATH%
-  - if %build_suite%==msvc2015 set PATH="C:\Program Files (x86)\MSBuild\14.0\Bin";%PATH%
+  - if %build_suite%==msvc2017 set PATH=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin;%PATH%
+  - if %build_suite%==msvc2015 set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 
 install:
   - echo "Downloading ciuploadtool"
@@ -60,6 +60,39 @@ install:
   - ps: if ($env:prepare_mode -eq "YES") { throw "Failing in order to stop the current build matrix job early" }
 
 build_script:
+# Boost
+  - cd c:\dev
+  - echo "Building boost"
+  - curl -fsSL https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.7z -o boost_1_66_0.7z
+  - 7z x boost_1_66_0.7z
+  - cd boost_1_66_0
+  - if %build_tool%==mingw set BOOSTINSTALLDIR=%cd%\mingw_installdir else set BOOSTINSTALLDIR=%cd%\msvc_installdir
+  - if %build_tool%==mingw set BOOSTBUILDDIR=%cd%\mingw_builddir else set BOOSTBUILDDIR=%cd%\msvc_builddir
+  - if %build_tool%==mingw set BOOSTTOOLCHAIN=gcc
+  - if %build_suite%==msvc2015 set BOOSTTOOLCHAIN=msvc-14.0
+  - if %build_suite%==msvc2017 set BOOSTTOOLCHAIN=msvc-14.1
+  - if %build_tool%==mingw cd tools\build
+  - if %build_tool%==mingw bootstrap.bat gcc
+  - if not %build_tool%==mingw bootstrap.bat
+  - if %build_tool%==mingw .\b2 --prefix=..\..\b2_installdir install
+  - if not %build_tool%==mingw .\b2 --prefix=b2_installdir install
+  - if %build_tool%==mingw cd ..\..\b2_installdir\bin
+  - if not %build_tool%==mingw cd b2_installdir\bin
+  - set PATH=%cd%;%PATH%
+  - cd ..\..\
+  - b2 --prefix=%BOOSTINSTALLDIR% --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared install
+# Rearrange the location of some stuff within the installation dir
+  - cd %BOOSTINSTALLDIR%
+  - move include\boost-1_66\boost include
+  - rmdir include\boost-1_66
+  - md bin
+  - move lib\*.dll bin\
+  - set PATH=%cd%\bin;%PATH%
+  - set LIB=%cd%\lib;%LIB%
+  - set INCLUDE=%cd%\include;%INCLUDE%
+# Finalization
+  - 7z a boost_%build_suite%_%arch_name%.zip *
+  - mv boost_%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
 # openssl
   - cd c:\dev
   - echo "Building openssl"
@@ -363,39 +396,6 @@ build_script:
   - set PATH=%cd%\bin;%PATH%
   - 7z a breakpad-%build_suite%_%arch_name%.zip *
   - mv breakpad-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
-# Boost
-  - cd c:\dev
-  - echo "Building boost"
-  - curl -fsSL https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.7z -o boost_1_66_0.7z
-  - 7z x boost_1_66_0.7z
-  - cd boost_1_66_0
-  - if %build_tool%==mingw set BOOSTINSTALLDIR=%cd%\mingw_installdir else set BOOSTINSTALLDIR=%cd%\msvc_installdir
-  - if %build_tool%==mingw set BOOSTBUILDDIR=%cd%\mingw_builddir else set BOOSTBUILDDIR=%cd%\msvc_builddir
-  - if %build_tool%==mingw set BOOSTTOOLCHAIN=gcc
-  - if %build_suite%==msvc2015 set BOOSTTOOLCHAIN=msvc-14.0
-  - if %build_suite%==msvc2017 set BOOSTTOOLCHAIN=msvc-14.1
-  - if %build_tool%==mingw cd tools\build
-  - if %build_tool%==mingw bootstrap.bat gcc
-  - if not %build_tool%==mingw bootstrap.bat
-  - if %build_tool%==mingw .\b2 --prefix=..\..\b2_installdir install
-  - if not %build_tool%==mingw .\b2 --prefix=b2_installdir install
-  - if %build_tool%==mingw cd ..\..\b2_installdir\bin
-  - if not %build_tool%==mingw cd b2_installdir\bin
-  - set PATH=%cd%;%PATH%
-  - cd ..\..\
-  - b2 --prefix=%BOOSTINSTALLDIR% --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared install
-# Rearrange the location of some stuff within the installation dir
-  - cd %BOOSTINSTALLDIR%
-  - move include\boost-1_66\boost include
-  - rmdir include\boost-1_66
-  - md bin
-  - move lib\*.dll bin\
-  - set PATH=%cd%\bin;%PATH%
-  - set LIB=%cd%\lib;%LIB%
-  - set INCLUDE=%cd%\include;%INCLUDE%
-# Finalization
-  - 7z a boost_%build_suite%_%arch_name%.zip *
-  - mv boost_%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
