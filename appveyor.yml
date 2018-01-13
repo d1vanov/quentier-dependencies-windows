@@ -375,7 +375,9 @@ build_script:
   - if %build_suite%==msvc2015 set BOOSTTOOLCHAIN=msvc-14.0
   - if %build_suite%==msvc2017 set BOOSTTOOLCHAIN=msvc-14.1
   - cd tools\build
-  - bootstrap.bat %BOOSTTOOLCHAIN%
+  - if %build_tool%==mingw bootstrap.bat gcc
+  - if %build_suite%==msvc2015 bootstrap.bat vc140
+  - if %build_suite%==msvc2017 bootstrap.bat vc141
   - .\b2 --prefix=..\..\b2_installdir install
   - cd ..\..\b2_installdir\bin
   - set PATH=%cd%;%PATH%
