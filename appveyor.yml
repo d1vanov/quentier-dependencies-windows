@@ -8,21 +8,21 @@ environment:
  auth_token:
    secure: rLuHhO0prerqoGCYmfOoyxqcwwamCXtuZtl4Jzqeu3aGgflk0mnX1fogLq68YcRW
  matrix:
-   #   - prepare_mode: YES
-   #     arch_name: none
-   #     build_tool: none
-   #     build_suite: none
-   #   - prepare_mode: NO
-   #     arch_name: x86
-   #     build_tool: msvc
-   #     build_suite: msvc2015
-   #     qt: msvc2015
-   #   - prepare_mode: NO
-   #     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-   #     arch_name: x64
-   #     build_tool: msvc
-   #     build_suite: msvc2017
-   #     qt: msvc2017_64
+   - prepare_mode: YES
+     arch_name: none
+     build_tool: none
+     build_suite: none
+   - prepare_mode: NO
+     arch_name: x86
+     build_tool: msvc
+     build_suite: msvc2015
+     qt: msvc2015
+   - prepare_mode: NO
+     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+     arch_name: x64
+     build_tool: msvc
+     build_suite: msvc2017
+     qt: msvc2017_64
    - prepare_mode: NO
      arch_name: x86
      build_tool: mingw
