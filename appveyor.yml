@@ -8,21 +8,21 @@ environment:
  auth_token:
    secure: rLuHhO0prerqoGCYmfOoyxqcwwamCXtuZtl4Jzqeu3aGgflk0mnX1fogLq68YcRW
  matrix:
-   - prepare_mode: YES
-     arch_name: none
-     build_tool: none
-     build_suite: none
-   - prepare_mode: NO
-     arch_name: x86
-     build_tool: msvc
-     build_suite: msvc2015
-     qt: msvc2015
-   - prepare_mode: NO
-     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-     arch_name: x64
-     build_tool: msvc
-     build_suite: msvc2017
-     qt: msvc2017_64
+   #   - prepare_mode: YES
+   #     arch_name: none
+   #     build_tool: none
+   #     build_suite: none
+   #   - prepare_mode: NO
+   #     arch_name: x86
+   #     build_tool: msvc
+   #     build_suite: msvc2015
+   #     qt: msvc2015
+   #   - prepare_mode: NO
+   #     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+   #     arch_name: x64
+   #     build_tool: msvc
+   #     build_suite: msvc2017
+   #     qt: msvc2017_64
    - prepare_mode: NO
      arch_name: x86
      build_tool: mingw
@@ -46,7 +46,6 @@ init:
   - if %build_suite%==msvc2015 call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %platform%
   - if not %build_tool%==mingw (set makefiles="NMake Makefiles") else (set makefiles="MinGW Makefiles")
   - if %build_tool%==mingw set PATH=C:\MinGW\bin;C:\Program Files (x86)\CMake\bin;%PATH%
-  - if %arch_name%==x86 set OPENSSL_ROOT_DIR=C:\OpenSSL-Win32 else set OPENSSL_ROOT_DIR=C:\OpenSSL-Win64
   - if %build_suite%==msvc2017 set PATH=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin;%PATH%
   - if %build_suite%==msvc2015 set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 
@@ -73,7 +72,7 @@ build_script:
   - if %build_tool%==mingw bootstrap.bat gcc
   - if not %build_tool%==mingw bootstrap.bat
   - set PATH=%cd%;%PATH%
-  - .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared runtime-link=shared --build-type=complete stage >NUL
+  - .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared runtime-link=shared --build-type=complete stage
 # Rearrange the location of some stuff within the installation dir
   - cd stage
   - md include\boost
