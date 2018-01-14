@@ -75,7 +75,7 @@ build_script:
   - if %build_tool%==mingw bootstrap.bat gcc
   - if not %build_tool%==mingw bootstrap.bat
   - set PATH=%cd%;%PATH%
-  - .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared address-model=%BOOSTADDRESSMODE% runtime-link=shared --build-type=complete stage >NUL
+  - .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared address-model=%BOOSTADDRESSMODE% runtime-link=shared variant=release,debug --build-type=complete stage >NUL
 # Rearrange the location of some stuff within the installation dir
   - cd stage
   - md include\boost
