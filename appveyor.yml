@@ -70,11 +70,12 @@ build_script:
   - if %build_tool%==mingw set BOOSTTOOLCHAIN=gcc
   - if %build_suite%==msvc2015 set BOOSTTOOLCHAIN=msvc-14.0
   - if %build_suite%==msvc2017 set BOOSTTOOLCHAIN=msvc-14.1
+  - if %build_suite%==msvc2017 set BOOSTADDRESSMODE=64
+  - if not %build_suite%==msvc2017 set BOOSTADDRESSMODE=32
   - if %build_tool%==mingw bootstrap.bat gcc
   - if not %build_tool%==mingw bootstrap.bat
   - set PATH=%cd%;%PATH%
-  - if not %build_tool%==mingw .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared runtime-link=shared --build-type=complete stage
-  - if %build_tool%==mingw .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared address-model=32 --build-type=complete stage
+  - .\b2 --build-dir=%BOOSTBUILDDIR% --with-program_options toolset=%BOOSTTOOLCHAIN% link=shared address-model=%BOOSTADDRESSMODE% runtime-link=shared --build-type=complete stage
 # Rearrange the location of some stuff within the installation dir
   - cd stage
   - md include\boost
