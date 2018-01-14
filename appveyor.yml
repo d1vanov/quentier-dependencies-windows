@@ -94,16 +94,32 @@ build_script:
   - git clone https://github.com/openssl/openssl.git
   - cd openssl
   - git checkout OpenSSL_1_0_2n
+# release MSVC build
   - if %build_suite%==msvc2015 perl Configure VC-WIN32 no-asm --prefix=%cd%\installdir
   - if %build_suite%==msvc2015 ms\do_ms
   - if %build_suite%==msvc2017 perl Configure VC-WIN64A no-asm --prefix=%cd%\installdir
   - if %build_suite%==msvc2017 ms\do_win64a
   - if not %build_tool%==mingw nmake -f ms\ntdll.mak >NUL
-  - if %build_suite%==msvc2015 nmake -f ms\ntdll.mak test >NUL
+  - if %build_suite%==msvc2015 nmake -f ms\ntdll.mak test >NUL 2>&1
   - if %build_suite%==msvc2017 cd out32dll
-  - if %build_suite%==msvc2017 ..\ms\test
+  - if %build_suite%==msvc2017 ..\ms\test >NUL 2>&1
   - if %build_suite%==msvc2017 cd ..
   - if not %build_tool%==mingw nmake -f ms\ntdll.mak install
+# debug MSVC build
+  - if %build_suite%==msvc2015 perl Configure debug-VC-WIN32 no-asm --prefix=%cd%\installdir-dbg
+  - if %build_suite%==msvc2015 ms\do_ms
+  - if %build_suite%==msvc2017 perl Configure debug-VC-WIN64A no-asm --prefix=%cd%\installdir-dbg
+  - if %build_suite%==msvc2017 ms\do_win64a
+  - if not %build_tool%==mingw nmake -f ms\ntdll.mak >NUL
+  - if %build_suite%==msvc2015 nmake -f ms\ntdll.mak test >NUL 2>&1
+  - if %build_suite%==msvc2017 cd out32dll
+  - if %build_suite%==msvc2017 ..\ms\test >NUL 2>&1
+  - if %build_suite%==msvc2017 cd ..
+  - if not %build_tool%==mingw nmake -f ms\ntdll.mak install
+# Copy renamed debug libs into the release installation dir
+  - if not %build_tool%==mingw copy installdir-dbg\lib\libeay32.lib installdir\lib\libeay32d.lib
+  - if not %build_tool%==mingw copy installdir-dbg\lib\ssleay32.lib installdir\lib\ssleay32d.lib
+# MinGW build
   - if %build_tool%==mingw C:\MinGW\msys\1.0\bin\bash -lc "cd /c/dev/openssl && ./Configure mingw no-asm --prefix=/c/dev/openssl/installdir && make > /dev/null && make test > /dev/null && make install"
 # Finalization
   - cd installdir
