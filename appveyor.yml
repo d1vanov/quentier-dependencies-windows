@@ -57,6 +57,12 @@ install:
   - 7z x ciuploadtool_windows_x86.zip
   - if %prepare_mode%==YES c:\dev\ciuploadtool\ciuploadtool.exe -preponly
   - ps: if ($env:prepare_mode -eq "YES") { throw "Failing in order to stop the current build matrix job early" }
+# Get NASM (required to build OpenSSL for MinGW)
+  - if %build_tool%==mingw md c:\dev\nasm
+  - if %build_tool%==mingw cd c:\dev\nasm
+  - if %build_tool%==mingw curl -fsSL http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe -o nasminst.exe
+  - if %build_tool%==mingw start /wait nasminst.exe /S
+  - if %build_tool%==mingw set PATH=C:\Program Files (x86)\nasm;%PATH%
 
 build_script:
 # Boost
@@ -120,7 +126,7 @@ build_script:
   - if not %build_tool%==mingw copy installdir-dbg\lib\libeay32.lib installdir\lib\libeay32d.lib
   - if not %build_tool%==mingw copy installdir-dbg\lib\ssleay32.lib installdir\lib\ssleay32d.lib
 # MinGW build
-  - if %build_tool%==mingw C:\MinGW\msys\1.0\bin\bash -lc "cd /c/dev/openssl && ./Configure mingw no-asm --prefix=/c/dev/openssl/installdir && make > /dev/null && make test > /dev/null && make install"
+  - if %build_tool%==mingw C:\MinGW\msys\1.0\bin\bash -lc "cd /c/dev/openssl && ./Configure shared mingw --prefix=/c/dev/openssl/installdir && make depend > /dev/null && make > /dev/null && make test > /dev/null && make install"
 # Finalization
   - cd installdir
   - set PATH=%cd%\bin;%PATH%
