@@ -68,7 +68,7 @@ build_script:
 # Boost
   - cd c:\dev
   - echo "Building boost"
-  - cutl -fsSL https://dl.bintray.com/boostorg/release/1.65.0/source/boost_1_65_0.7z -o boost_1_65_0.7z
+  - curl -fsSL https://dl.bintray.com/boostorg/release/1.65.0/source/boost_1_65_0.7z -o boost_1_65_0.7z
   - 7z x boost_1_65_0.7z
   - cd boost_1_65_0
   - if %build_tool%==mingw set BOOSTBUILDDIR=%cd%\mingw_builddir
