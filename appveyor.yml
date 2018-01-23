@@ -376,10 +376,10 @@ build_script:
   - if not %build_tool%==mingw copy Debug\lib\crash_generation_client.lib c:\dev\breakpad\installdir\lib\crash_generation_client_d.lib
   - if not %build_tool%==mingw copy Debug\lib\crash_generation_server.lib c:\dev\breakpad\installdir\lib\crash_generation_server_d.lib
   - if not %build_tool%==mingw copy Debug\lib\exception_handler.lib c:\dev\breakpad\installdir\lib\exception_handler_d.lib
-  - if not %build_tool%==mingw copy Debug\common.pdb c:\dev\breakpad\installdir\lib\
-  - if not %build_tool%==mingw copy Debug\crash_generation_client.pdb c:\dev\breakpad\installdir\lib\
-  - if not %build_tool%==mingw copy Debug\crash_generation_server.pdb c:\dev\breakpad\installdir\lib\
-  - if not %build_tool%==mingw copy Debug\exception_handler.pdb c:\dev\breakpad\installdir\lib\
+  - if not %build_tool%==mingw copy Debug\common.pdb c:\dev\breakpad\installdir\bin\
+  - if not %build_tool%==mingw copy Debug\crash_generation_client.pdb c:\dev\breakpad\installdir\bin\
+  - if not %build_tool%==mingw copy Debug\crash_generation_server.pdb c:\dev\breakpad\installdir\bin\
+  - if not %build_tool%==mingw copy Debug\exception_handler.pdb c:\dev\breakpad\installdir\bin\
   - if not %build_tool%==mingw cd c:\dev\breakpad
   - if not %build_tool%==mingw ..\gyp\gyp.bat src\tools\windows\tools_windows.gyp --no-circular-check -Dwin_release_RuntimeLibrary=2 -Dwin_debug_RuntimeLibrary=3
   - if not %build_tool%==mingw cd src\tools\windows
