@@ -24,6 +24,7 @@ environment:
      build_suite: msvc2017
      qt: msvc2017_64
    - prepare_mode: NO
+     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
      arch_name: x86
      build_tool: mingw
      build_suite: mingw492_32
