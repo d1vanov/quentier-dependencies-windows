@@ -221,7 +221,7 @@ build_script:
   - if not %build_tool%==mingw git clone https://github.com/kiyolee/libxml2-win-build.git libxml2-win-build
   - if not %build_tool%==mingw cd libxml2-win-build
   - if %build_suite%==msvc2015 cd build-VS2015
-  - if %build_suite%==msvc2015 msbuild libxml2.sln /p:Configuration="Release" /p:Platform="x86" /clp:ErrorsOnly
+  - if %build_suite%==msvc2015 msbuild libxml2.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
   - if %build_suite%==msvc2017 cd build-VS2017
   - if %build_suite%==msvc2017 msbuild libxml2.sln /p:Configuration="Release" /p:Platform="x64" /clp:ErrorsOnly
   - if not %build_tool%==mingw md installdir
