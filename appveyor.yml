@@ -414,6 +414,15 @@ build_script:
   - set PATH=%cd%\bin;%PATH%
   - 7z a breakpad-%build_suite%_%arch_name%.zip *
   - mv breakpad-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
+# libbacktrace, only for MinGW
+  - if %build_tool%==mingw cd c:\dev
+  - if %build_tool%==mingw echo "Building libbacktrace"
+  - if %build_tool%==mingw git clone https://github.com/ianlancetaylor/libbacktrace.git
+  - if %build_tool%==mingw cd libbacktrace
+  - if %build_tool%==mingw C:\msys64\usr\bin\bash -lc "CC=C:/MinGW/bin/gcc CXX=C:/MinGW/bin/g++ ./configure --prefix=$(pwd)/installdir --host=i386-unknown-mingw32 && make && make install"
+  - if %build_tool%==mingw cd installdir
+  - if %build_tool%==mingw 7z a libbacktrace-%build_suite%_%arch_name%.zip *
+  - if %build_tool%==mingw mv libbacktrace-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
