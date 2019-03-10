@@ -234,7 +234,7 @@ build_script:
   - if %build_suite%==msvc2017 copy x64\Release\libxml2.lib installdir\lib\libxml2.lib
   - if not %build_tool%==mingw xcopy ..\include installdir\include /e >NUL
 # MinGW branch
-  - if %build_tool%==mingw git clone git://git.gnome.org/libxml2
+  - if %build_tool%==mingw git clone https://gitlab.gnome.org/GNOME/libxml2.git
   - if %build_tool%==mingw cd libxml2
   - if %build_tool%==mingw git checkout v2.9.7
   - if %build_tool%==mingw cd win32
