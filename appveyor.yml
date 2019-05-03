@@ -29,7 +29,6 @@ environment:
      build_tool: mingw
      build_suite: mingw530
      qt: mingw492_32
-     CACHE: C:\cache
      HOST: i686-w64-mingw32
      platform: Win32
      configuration: Release
@@ -268,7 +267,9 @@ build_script:
   - echo "Building hunspell"
   - git clone https://github.com/hunspell/hunspell.git hunspell
   - cd c:\dev\hunspell
-  - git checkout v1.6.2
+  - if not %build_tool%==mingw set HUNSPELL_VERSION=1.7.0
+  - if %build_tool%==mingw set HUNSPELL_VERSION=1.6.2
+  - git checkout v%HUNSPELL_VERSION%
   - md installdir
   - md installdir\include
   - md installdir\include\hunspell
@@ -293,8 +294,8 @@ build_script:
   - set HUNSPELL_INCLUDE_DIR=%cd%\include
   - if %build_tool%==mingw set HUNSPELL_LIBRARIES=%cd%\lib\libhunspell-1.6.dll.a
   - if not %build_tool%==mingw set HUNSPELL_LIBRARIES=%cd%\lib\libhunspell.lib
-  - 7z a libhunspell-1.6.2-%build_suite%_%arch_name%.zip *
-  - mv libhunspell-1.6.2-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
+  - 7z a libhunspell-%HUNSPELL_VERSION%-%build_suite%_%arch_name%.zip *
+  - mv libhunspell-%HUNSPELL_VERSION%-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
 # tidy-html5
   - cd c:\dev
   - echo "Building tidy-html5"
@@ -322,15 +323,14 @@ build_script:
   - echo "Building qtkeychain"
   - git clone https://github.com/frankosterfeld/qtkeychain.git
   - cd c:\dev\qtkeychain
-  - git checkout v0.8.0
+  - git checkout v0.9.1
   - if %build_suite%==mingw530 C:\msys64\usr\bin\bash -lc "cd /c/dev/qtkeychain && sed -i s/SecureZeroMemory/ZeroMemory/g keychain_win.cpp"
-  - C:\msys64\usr\bin\bash -lc "cd /c/dev/qtkeychain && sed -i -e 's/\!USE_CREDENTIAL_STORE/NOT USE_CREDENTIAL_STORE/g' CMakeLists.txt"
   - md build
   - cd build
   - if %build_tool%==mingw set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
   - if not %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/qtkeychain && echo 'install(FILES $<TARGET_PDB_FILE:${QTKEYCHAIN_TARGET_NAME}> DESTINATION bin OPTIONAL)' >> CMakeLists.txt"
-  - if not %build_tool%==mingw cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=RelWithDebInfo -DUSE_CREDENTIAL_STORE=OFF -DCMAKE_INSTALL_PREFIX="c:\dev\qtkeychain\build\installdir" -DCMAKE_PREFIX_PATH="C:/Qt/5.10/%qt%
-  - if %build_tool%==mingw cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=RelWithDebInfo -DUSE_CREDENTIAL_STORE=OFF -DCMAKE_INSTALL_PREFIX="c:\dev\qtkeychain\build\installdir" -DCMAKE_PREFIX_PATH="C:/Qt/5.5/%qt%
+  - if not %build_tool%==mingw cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=RelWithDebInfo -DUSE_CREDENTIAL_STORE=OFF -DBUILD_TEST_APPLICATION=OFF -DCMAKE_INSTALL_PREFIX="c:\dev\qtkeychain\build\installdir" -DCMAKE_PREFIX_PATH="C:/Qt/5.10/%qt%" -DCMAKE_CXX_FLAGS="/wd4365 /wd4464 /wd4571 /wd4577 /wd4619 /wd4625 /wd4626 /wd4668 /wd4710 /wd4774 /wd4820 /wd4946 /wd5026 /wd5027"
+  - if %build_tool%==mingw cmake .. -G %makefiles% -DCMAKE_BUILD_TYPE=RelWithDebInfo -DUSE_CREDENTIAL_STORE=OFF -DBUILD_TEST_APPLICATION=OFF -DCMAKE_INSTALL_PREFIX="c:\dev\qtkeychain\build\installdir" -DCMAKE_PREFIX_PATH="C:/Qt/5.5/%qt%"
   - cmake --build . --target all
   - cmake --build . --target install
   - if %build_tool%==mingw set PATH=%PATH%;C:\Program Files\Git\usr\bin
@@ -339,8 +339,8 @@ build_script:
   - set PATH=%PATH%;%cd%\bin
   - set LIB=%LIB%;%cd%\lib
   - set INCLUDE=%INCLUDE%;%cd%\include
-  - 7z a qtkeychain-0.8.0-%build_suite%_%arch_name%.zip *
-  - mv qtkeychain-0.8.0-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
+  - 7z a qtkeychain-0.9.1-%build_suite%_%arch_name%.zip *
+  - mv qtkeychain-0.9.1-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
 # Google breakpad
   - cd c:\dev
   - echo "Building breakpad"
@@ -427,9 +427,6 @@ build_script:
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - c:\dev\ciuploadtool\ciuploadtool.exe *.zip
-
-cache:
- - C:\cache
 
 artifacts:
  - path: '*.zip'
