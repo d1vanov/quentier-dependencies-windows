@@ -27,7 +27,7 @@ environment:
      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
      arch_name: x86
      build_tool: mingw
-     build_suite: mingw492_32
+     build_suite: mingw530
      qt: mingw492_32
      CACHE: C:\cache
      HOST: i686-w64-mingw32
@@ -42,7 +42,7 @@ init:
   - set ORIGPATH=%PATH%
   - if %build_suite%==msvc2017 set tool=VS2017_x64
   - if %build_suite%==msvc2015 set tool=VS2015_x86
-  - if %build_suite%==mingw492_32 set tool=MinGW_x86
+  - if %build_suite%==mingw530 set tool=MinGW_x86
   - if %build_suite%==msvc2017 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
   - if %build_suite%==msvc2015 call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %platform%
   - if not %build_tool%==mingw (set makefiles="NMake Makefiles") else (set makefiles="MinGW Makefiles")
@@ -165,7 +165,7 @@ build_script:
   - if %build_tool%==mingw del libiconv-1.15.tar
   - if %build_tool%==mingw del libiconv-1.15.tar.gz
   - if %build_tool%==mingw cd libiconv-1.15
-  - if %build_suite%==mingw492_32 C:\cygwin\bin\bash -lc "cd /cygdrive/c/dev/libiconv-win-build/libiconv-1.15 && export PATH=/usr/local/mingw32/bin:$PATH && ./configure --host=i686-w64-mingw32 --prefix=$(pwd)/installdir CC=i686-w64-mingw32-gcc CPPFLAGS='-I/usr/local/mingw32/include -Wall' LDFLAGS='-L/usr/local/mingw32/lib' && make && make check && make install"
+  - if %build_suite%==mingw530 C:\cygwin\bin\bash -lc "cd /cygdrive/c/dev/libiconv-win-build/libiconv-1.15 && export PATH=/usr/local/mingw32/bin:$PATH && ./configure --host=i686-w64-mingw32 --prefix=$(pwd)/installdir CC=i686-w64-mingw32-gcc CPPFLAGS='-I/usr/local/mingw32/include -Wall' LDFLAGS='-L/usr/local/mingw32/lib' && make && make check && make install"
 # Finalization
   - cd installdir
   - set PATH=%cd%\bin;%PATH%
@@ -284,7 +284,7 @@ build_script:
   - if not %build_tool%==mingw xcopy src\hunspell installdir\include\hunspell /e
 # MinGW branch
 # NOTE: need to apply a small patch for building with MinGW
-  - if %build_suite%==mingw492_32 C:\msys64\usr\bin\bash -lc "cd /c/dev/hunspell && autoreconf -i && sed -i -e s/\ \|\ S_IRWXG\ \|\ S_IRWXO//g src/tools/hzip.cxx && CC=C:/MinGW/bin/gcc CXX=C:/MinGW/bin/g++ ./configure --prefix=$(pwd)/installdir --host=i386-unknown-mingw32 && make && make check && make install"
+  - if %build_suite%==mingw530 C:\msys64\usr\bin\bash -lc "cd /c/dev/hunspell && autoreconf -i && sed -i -e s/\ \|\ S_IRWXG\ \|\ S_IRWXO//g src/tools/hzip.cxx && CC=C:/MinGW/bin/gcc CXX=C:/MinGW/bin/g++ ./configure --prefix=$(pwd)/installdir --host=i386-unknown-mingw32 && make && make check && make install"
 # Finalization
   - cd installdir
   - set PATH=%cd%\bin;%PATH%
@@ -323,7 +323,7 @@ build_script:
   - git clone https://github.com/frankosterfeld/qtkeychain.git
   - cd c:\dev\qtkeychain
   - git checkout v0.8.0
-  - if %build_suite%==mingw492_32 C:\msys64\usr\bin\bash -lc "cd /c/dev/qtkeychain && sed -i s/SecureZeroMemory/ZeroMemory/g keychain_win.cpp"
+  - if %build_suite%==mingw530 C:\msys64\usr\bin\bash -lc "cd /c/dev/qtkeychain && sed -i s/SecureZeroMemory/ZeroMemory/g keychain_win.cpp"
   - C:\msys64\usr\bin\bash -lc "cd /c/dev/qtkeychain && sed -i -e 's/\!USE_CREDENTIAL_STORE/NOT USE_CREDENTIAL_STORE/g' CMakeLists.txt"
   - md build
   - cd build
