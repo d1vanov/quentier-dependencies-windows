@@ -409,7 +409,7 @@ build_script:
   - if %build_tool%==mingw mv staging\usr installdir
   - if %build_tool%==mingw md installdir\include\breakpad\client\windows
   - if %build_tool%==mingw md installdir\include\breakpad\common\windows
-  - if %build_tool%==mingw xcopy src installdir\include\breakpad /e
+  - if %build_tool%==mingw xcopy src installdir\include\breakpad /e /y
 # Finalization
   - cd installdir
   - set LIB=%cd%\lib;%LIB%
