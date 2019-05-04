@@ -360,7 +360,7 @@ build_script:
   - if not %build_tool%==mingw md installdir\include\breakpad\common\windows
   - if not %build_tool%==mingw md installdir\lib
   - if not %build_tool%==mingw md installdir\bin
-  - if not %build_tool%==mingw xcopy src installdir\include\breakpad /e
+  - if not %build_tool%==mingw xcopy src installdir\include\breakpad /e /y >NUL
   - |
     if not %build_tool%==mingw C:\msys64\usr\bin\bash -lc "cd /c/dev/breakpad/src/build && sed -i -e \"s/'WarnAsError': 'true'/'WarnAsError': 'false'/g\" common.gypi"
   - if not %build_tool%==mingw ..\gyp\gyp.bat src\client\windows\breakpad_client.gyp --no-circular-check -Dwin_release_RuntimeLibrary=2 -Dwin_debug_RuntimeLibrary=3
@@ -398,18 +398,14 @@ build_script:
   - if %build_tool%==mingw git clone https://github.com/d1vanov/google-breakpad.git breakpad
   - if %build_tool%==mingw cd breakpad
   - if %build_tool%==mingw git checkout pecoff-dwarf-on-git-20171117
-  - if %build_tool%==mingw set APPVEYOR_BUILD_FOLDER_BAK=%APPVEYOR_BUILD_FOLDER%
-  - if %build_tool%==mingw set APPVEYOR_BUILD_FOLDER=%cd%
-  - if %build_tool%==mingw set PATH_BEFORE=%PATH%
-  - if %build_tool%==mingw call scripts\appveyor-gcc.bat install
-  - if %build_tool%==mingw call scripts\appveyor-gcc.bat build_script
-  - if %build_tool%==mingw call scripts\appveyor-gcc.bat test_script
-  - if %build_tool%==mingw set PATH=%PATH_BEFORE%
-  - if %build_tool%==mingw set APPVEYOR_BUILD_FOLDER=%APPVEYOR_BUILD_FOLDER_BAK%
-  - if %build_tool%==mingw mv staging\usr installdir
+  - if %build_tool%==mingw set Configuration=Release
+  - if %build_tool%==mingw C:\cygwin64\bin\sh -lc "cd /cygdrive/c/dev/breakpad && ./fetch-externals && autoreconf -fvi && export PATH=/cygdrive/c/MinGW/bin:$PATH && CC=/cygdrive/c/MinGW/bin/gcc.exe CXX=/cygdrive/c/MinGW/bin/g++.exe ./configure --prefix=$(pwd)/installdir --host=i686-w64-mingw32 && sed -i 's/\r//g' src/tools/gyp/gyp && sed -i '/tests/d' src/client/windows/breakpad_client.gyp && make && make install"
+  - if %build_tool%==mingw C:\cygwin64\bin\sh -lc "cd /cygdrive/c/dev/breakpad && ranlib installdir/lib/libbreakpad.a"
+  - if %build_tool%==mingw C:\cygwin64\bin\sh -lc "cd /cygdrive/c/dev/breakpad && i686-w64-mingw32-ar cr installdir/lib/libbreakpad_client.a"
+  - if %build_tool%==mingw C:\cygwin64\bin\sh -lc "cd /cygdrive/c/dev/breakpad && mkdir -p clientlib && cd clientlib && i686-w64-mingw32-ar x ../src/out/Release/obj.target/client/windows/crash_generation/libcrash_generation_client.a && i686-w64-mingw32-ar x ../src/out/Release/obj.target/client/windows/crash_generation/libcrash_generation_server.a && i686-w64-mingw32-ar x ../src/out/Release/obj.target/client/windows/handler/libexception_handler.a && i686-w64-mingw32-ar x ../src/out/Release/obj.target/client/windows/libcommon.a && i686-w64-mingw32-ar x ../src/out/Release/obj.target/client/windows/sender/libcrash_report_sender.a && i686-w64-mingw32-ar r ../installdir/lib/libbreakpad_client.a *.o"
   - if %build_tool%==mingw md installdir\include\breakpad\client\windows
   - if %build_tool%==mingw md installdir\include\breakpad\common\windows
-  - if %build_tool%==mingw xcopy src installdir\include\breakpad /e /y
+  - if %build_tool%==mingw xcopy src installdir\include\breakpad /e /y >NUL
 # Finalization
   - cd installdir
   - set LIB=%cd%\lib;%LIB%
