@@ -407,6 +407,9 @@ build_script:
   - if %build_tool%==mingw set PATH=%PATH_BEFORE%
   - if %build_tool%==mingw set APPVEYOR_BUILD_FOLDER=%APPVEYOR_BUILD_FOLDER_BAK%
   - if %build_tool%==mingw mv staging\usr installdir
+  - if %build_tool%==mingw md installdir\include\breakpad\client\windows
+  - if %build_tool%==mingw md installdir\include\breakpad\common\windows
+  - if %build_tool%==mingw xcopy src installdir\include\breakpad /e
 # Finalization
   - cd installdir
   - set LIB=%cd%\lib;%LIB%
