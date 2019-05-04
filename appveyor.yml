@@ -387,12 +387,6 @@ build_script:
   - if %build_suite%==msvc2015 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
   - if %build_suite%==msvc2017 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="x64"  /clp:ErrorsOnly
   - if not %build_tool%==mingw copy Release\dump_syms.exe c:\dev\breakpad\installdir\bin
-  - if not %build_tool%==mingw cd c:\dev\breakpad\installdir\bin
-  - if not %build_tool%==mingw curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/minidump_stackwalk.exe -o minidump_stackwalk.exe
-  - if not %build_tool%==mingw curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cygwin1.dll -o cygwin1.dll
-  - if not %build_tool%==mingw curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cygstdc++-6.dll -o cygstdc++-6.dll
-  - if not %build_tool%==mingw curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cyggcc_s-1.dll -o cyggcc_s-1.dll
-  - if not %build_tool%==mingw cd c:\dev\breakpad
 # MinGW branch (use breakpad fork capable of understanding the debug info from MinGW built binaries)
   - if %build_tool%==mingw md breakpad
   - if %build_tool%==mingw git clone https://github.com/d1vanov/google-breakpad.git breakpad
@@ -403,9 +397,17 @@ build_script:
   - if %build_tool%==mingw C:\cygwin64\bin\sh -lc "cd /cygdrive/c/dev/breakpad && ranlib installdir/lib/libbreakpad.a"
   - if %build_tool%==mingw C:\cygwin64\bin\sh -lc "cd /cygdrive/c/dev/breakpad && i686-w64-mingw32-ar cr installdir/lib/libbreakpad_client.a"
   - if %build_tool%==mingw C:\cygwin64\bin\sh -lc "cd /cygdrive/c/dev/breakpad && mkdir -p clientlib && cd clientlib && i686-w64-mingw32-ar x ../src/out/Release/obj.target/client/windows/crash_generation/libcrash_generation_client.a && i686-w64-mingw32-ar x ../src/out/Release/obj.target/client/windows/crash_generation/libcrash_generation_server.a && i686-w64-mingw32-ar x ../src/out/Release/obj.target/client/windows/handler/libexception_handler.a && i686-w64-mingw32-ar x ../src/out/Release/obj.target/client/windows/libcommon.a && i686-w64-mingw32-ar x ../src/out/Release/obj.target/client/windows/sender/libcrash_report_sender.a && i686-w64-mingw32-ar r ../installdir/lib/libbreakpad_client.a *.o"
+  - if %build_tool%==mingw C:\cygwin64\bin\sh -lc "rm -rf /cygdrive/c/dev/breakpad/installdir/bin/minidump_stackwalk.exe"
   - if %build_tool%==mingw md installdir\include\breakpad\client\windows
   - if %build_tool%==mingw md installdir\include\breakpad\common\windows
   - if %build_tool%==mingw xcopy src installdir\include\breakpad /e /y >NUL
+# Part agnostic to the used breakpad version
+  - cd c:\dev\breakpad\installdir\bin
+  - curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/minidump_stackwalk.exe -o minidump_stackwalk.exe
+  - curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cygwin1.dll -o cygwin1.dll
+  - curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cygstdc++-6.dll -o cygstdc++-6.dll
+  - curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cyggcc_s-1.dll -o cyggcc_s-1.dll
+  - cd c:\dev\breakpad
 # Finalization
   - cd installdir
   - set LIB=%cd%\lib;%LIB%
