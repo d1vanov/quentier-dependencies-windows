@@ -396,7 +396,7 @@ build_script:
   - if %build_tool%==mingw set APPVEYOR_BUILD_FOLDER=%cd%
   - if %build_tool%==mingw set PATH_BEFORE=%PATH%
   - if %build_tool%==mingw set HOST=i686-w64-mingw32
-  - if %build_tool%==mingw set CONFIGURATION=Release
+  - if %build_tool%==mingw set Configuration=Release
   - if %build_tool%==mingw call scripts\appveyor-gcc.bat install
   - if %build_tool%==mingw call scripts\appveyor-gcc.bat build_script
   - if %build_tool%==mingw call scripts\appveyor-gcc.bat test_script
