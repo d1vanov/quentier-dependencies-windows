@@ -1,1 +1,1 @@
-..\common\build_google_breakpad_msvc.bat
+%COMMONSCRIPTSDIR%\build_google_breakpad_msvc.bat
