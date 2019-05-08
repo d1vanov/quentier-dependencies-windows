@@ -69,7 +69,6 @@ install:
   - if %build_tool%==mingw set PATH=C:\Program Files (x86)\nasm;%PATH%
 
 build_script:
-  - echo %APPVEYOR_BUILD_FOLDER%
   - if not exist %APPVEYOR_BUILD_FOLDER% md %APPVEYOR_BUILD_FOLDER%
 # Boost
   - if not exist %APPVEYOR_BUILD_FOLDER%\boost-1_65_0-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_boost.bat else echo "Using cached version of boost"
