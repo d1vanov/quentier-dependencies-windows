@@ -4,13 +4,13 @@ git clone https://github.com/openssl/openssl.git
 cd openssl
 git checkout OpenSSL_1_0_2r
 REM release MSVC build
-perl Configure VC-WIN32 no-asm --prefix=%cd%\installdir
+call perl Configure VC-WIN32 no-asm --prefix=%cd%\installdir
 ms\do_ms
 nmake -f ms\ntdll.mak >NUL
 nmake -f ms\ntdll.mak test >NUL 2>&1
 nmake -f ms\ntdll.mak install
 REM debug MSVC build
-perl Configure debug-VC-WIN32 no-asm --prefix=%cd%\installdir-dbg
+call perl Configure debug-VC-WIN32 no-asm --prefix=%cd%\installdir-dbg
 ms\do_ms
 nmake -f ms\ntdll.mak >NUL
 nmake -f ms\ntdll.mak test >NUL 2>&1
