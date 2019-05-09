@@ -4,16 +4,14 @@ git clone https://github.com/openssl/openssl.git
 cd openssl
 git checkout OpenSSL_1_0_2r
 REM release MSVC build
-set OPENSSLBUILDMODE=VC-WIN32
-call %SCRIPTSDIR%\configure_openssl.bat
-call ms\do_ms
+perl Configure VC-WIN32 no-asm --prefix=%cd%\installdir
+call ms\do_ms.bat
 nmake -f ms\ntdll.mak
 nmake -f ms\ntdll.mak test
 nmake -f ms\ntdll.mak install
 REM debug MSVC build
-set OPENSSLBUILDMODE=debug-VC-WIN32
-call %SCRIPTSDIR%\configure_openssl.bat
-call ms\do_ms
+perl Configure debug-VC-WIN32 no-asm --prefix=%cd%\installdir
+call ms\do_ms.bat
 nmake -f ms\ntdll.mak
 nmake -f ms\ntdll.mak test
 nmake -f ms\ntdll.mak install
