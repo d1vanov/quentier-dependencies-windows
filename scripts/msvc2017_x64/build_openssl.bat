@@ -4,20 +4,21 @@ git clone https://github.com/openssl/openssl.git
 cd openssl
 git checkout OpenSSL_1_0_2r
 REM release MSVC build
-call perl Configure VC-WIN64A no-asm --prefix=%cd%\installdir
+set OPENSSLBUILDMODE=VC-WIN64A
+call configure_openssl.bat
 ms\do_win64a
-nmake -f ms\ntdll.mak >NUL
+nmake -f ms\ntdll.mak
 cd out32dll
-..\ms\test >NUL 2>&1
+..\ms\test
 cd ..
 nmake -f ms\ntdll.mak install
 REM debug MSVC build
-call perl Configure debug-VC-WIN32 no-asm --prefix=%cd%\installdir-dbg
-call perl Configure debug-VC-WIN64A no-asm --prefix=%cd%\installdir-dbg
+set OPENSSLBUILDMODE=debug-VC-WIN64A
+call configure_openssl.bat
 ms\do_win64a
-nmake -f ms\ntdll.mak >NUL
+nmake -f ms\ntdll.mak
 cd out32dll
-..\ms\test >NUL 2>&1
+..\ms\test
 cd ..
 nmake -f ms\ntdll.mak install
 REM Copy renamed debug libs into the release installation dir
