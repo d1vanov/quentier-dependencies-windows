@@ -6,18 +6,14 @@ git checkout OpenSSL_1_0_2r
 REM release MSVC build
 set OPENSSLBUILDMODE=VC-WIN32
 call %SCRIPTSDIR%\configure_openssl.bat
-echo "before MS\DO_ms"
-ms\do_ms
-echo "before make"
+call ms\do_ms
 nmake -f ms\ntdll.mak
-echo "before test"
 nmake -f ms\ntdll.mak test
-echo "before install"
 nmake -f ms\ntdll.mak install
 REM debug MSVC build
 set OPENSSLBUILDMODE=debug-VC-WIN32
 call %SCRIPTSDIR%\configure_openssl.bat
-ms\do_ms
+call ms\do_ms
 nmake -f ms\ntdll.mak
 nmake -f ms\ntdll.mak test
 nmake -f ms\ntdll.mak install
