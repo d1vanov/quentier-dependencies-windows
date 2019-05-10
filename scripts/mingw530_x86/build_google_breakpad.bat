@@ -7,9 +7,8 @@ git checkout pecoff-dwarf-on-git-20171117
 set APPVEYOR_BUILD_FOLDER_BAK=%APPVEYOR_BUILD_FOLDER%
 set APPVEYOR_BUILD_FOLDER=%cd%
 set PATH_BEFORE=%PATH%
-set HOST=i686-w64-mingw32
+set HOST=i386-unknown-mingw32
 set Configuration=Release
-C:\cygwin\bin\bash -lc "sed -i '26s#^\(.*\)$#export PATH=/cygdrive/c/MinGW/bin:$PATH; CC=/cygdrive/c/MinGW/bin/gcc.exe CXX=/cygdrive/c/MinGW/bin/g++.exe \1#g' /cygdrive/c/dev/breakpad/scripts/appveyor-gcc.sh"
 call scripts\appveyor-gcc.bat install
 call scripts\appveyor-gcc.bat build_script
 call scripts\appveyor-gcc.bat test_script
