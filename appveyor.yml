@@ -85,13 +85,13 @@ build_script:
   - if %build_tool%==mingw set HUNSPELL_VERSION=1.6.2
   - if not exist %APPVEYOR_BUILD_FOLDER%\libhunspell-%HUNSPELL_VERSION%-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_libhunspell.bat else echo "Using cached version of libhunspell"
 # tidy-html5
-  - if not exist tidy-html5-5.6.0-%build_suite%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_tidy_html5.bat else echo "Using cached version of tidy-html5"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-%build_suite%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_tidy_html5.bat else echo "Using cached version of tidy-html5"
 # qtkeychain
-  - if not exist qtkeychain-0.9.1-%build_suite%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_qtkeychain.bat else echo "Using cached version of qtkeychain"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-%build_suite%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_qtkeychain.bat else echo "Using cached version of qtkeychain"
 # Google breakpad
-  - if not exist breakpad-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_google_breakpad.bat else echo "Using cached version of google breakpad"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\breakpad-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_google_breakpad.bat else echo "Using cached version of google breakpad"
 # libbacktrace, only for MinGW
-  - if %build_tool%==mingw if not exist libbacktrace-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_libbacktrace.bat else echo "Using cached version of libbacktrace"
+  - if %build_tool%==mingw if not exist %APPVEYOR_BUILD_FOLDER%\libbacktrace-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_libbacktrace.bat else echo "Using cached version of libbacktrace"
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
