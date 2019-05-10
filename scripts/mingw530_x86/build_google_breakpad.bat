@@ -9,7 +9,7 @@ set APPVEYOR_BUILD_FOLDER=%cd%
 set PATH_BEFORE=%PATH%
 set HOST=i686-w64-mingw32
 set Configuration=Release
-C:\cygwin64\bin\bash -lc "sed -i '23s#sh scripts/appveyor-gcc.sh#export PATH=/cygdrive/c/MinGW/bin:$PATH; export CC=/cygdrive/c/MinGW/bin/gcc.exe; export CXX=/cygdrive/c/MinGW/bin/g++.exe; sh scripts/appvryor-gcc.sh# /cygdrive/c/dev/breakpad/scripts/appveyor.bat"
+C:\cygwin\bin\bash -lc "sed -i '23s#sh scripts/appveyor-gcc.sh#export PATH=/cygdrive/c/MinGW/bin:$PATH; export CC=/cygdrive/c/MinGW/bin/gcc.exe; export CXX=/cygdrive/c/MinGW/bin/g++.exe; sh scripts/appvryor-gcc.sh# /cygdrive/c/dev/breakpad/scripts/appveyor.bat"
 call scripts\appveyor-gcc.bat install
 call scripts\appveyor-gcc.bat build_script
 call scripts\appveyor-gcc.bat test_script
