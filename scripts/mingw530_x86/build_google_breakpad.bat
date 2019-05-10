@@ -3,15 +3,14 @@ echo "Building breakpad"
 md breakpad
 git clone https://github.com/d1vanov/google-breakpad.git breakpad
 cd breakpad
-git checkout pecoff-dwarf-on-git-20171117
+git checkout mingw
 set APPVEYOR_BUILD_FOLDER_BAK=%APPVEYOR_BUILD_FOLDER%
 set APPVEYOR_BUILD_FOLDER=%cd%
 set PATH_BEFORE=%PATH%
-set HOST=i386-unknown-mingw32
+set HOST=i686-w64-mingw32
 set Configuration=Release
 call scripts\appveyor-gcc.bat install
 call scripts\appveyor-gcc.bat build_script
-call scripts\appveyor-gcc.bat test_script
 set PATH=%PATH_BEFORE%
 set APPVEYOR_BUILD_FOLDER=%APPVEYOR_BUILD_FOLDER_BAK%
 mv staging\usr installdir
