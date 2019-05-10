@@ -1,0 +1,4 @@
+set BOOSTBUILDDIR=mingw_builddir
+set BOOSTTOOLCHAIN=gcc
+set BOOSTADDRESSMODE=32
+%COMMONSCRIPTSDIR%\build_boost.bat
