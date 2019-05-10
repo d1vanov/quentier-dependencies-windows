@@ -124,7 +124,7 @@ cache:
   - '%APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-mingw530_x86.zip -> cache_versions\libxml2-mingw530_x86.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\libhunspell-1.7.0-msvc2015_x86.zip -> cache_versions\libhunspell-msvc2015_x86.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\libhunspell-1.7.0-msvc2017_x64.zip -> cache_versions\libhunspell-msvc2017_x64.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\libhunspell-1.6.2-mingw_x86.zip -> cache_versions\libhunspell-mingw530_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\libhunspell-1.6.2-mingw530_x86.zip -> cache_versions\libhunspell-mingw530_x86.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-msvc2015_x86.zip -> cache_versions\tidy-html5-msvc2015_x86.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-msvc2017_x64.zip -> cache_versions\tidy-html5-msvc2017_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-mingw530_x86.zip -> cache_versions\tidy-html5-mingw530_x86.txt, cache_versions\global.txt'
