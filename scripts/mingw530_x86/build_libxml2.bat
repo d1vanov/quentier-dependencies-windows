@@ -26,6 +26,6 @@ REM the shared library yet this static library requires the target application
 REM to explicitly link to libiconv which is not desired
 del installdir\lib\libxml2.a
 REM Finalization
-cd ..\installdir
+cd installdir
 7z a libxml2-2.9.7-mingw530_x86.zip *
 mv libxml2-2.9.7-mingw530_x86.zip %APPVEYOR_BUILD_FOLDER%
