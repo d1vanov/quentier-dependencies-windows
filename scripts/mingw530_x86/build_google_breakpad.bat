@@ -16,8 +16,23 @@ set PATH=%PATH_BEFORE%
 set APPVEYOR_BUILD_FOLDER=%APPVEYOR_BUILD_FOLDER_BAK%
 mv staging\usr installdir
 md installdir\include\breakpad\client\windows
+md installdir\include\breakpad\client\windows\common
+md installdir\include\breakpad\client\windows\crash_generation
+md installdir\include\breakpad\client\windows\handler
+md installdir\include\breakpad\client\windows\sender
 md installdir\include\breakpad\common\windows
-xcopy src installdir\include\breakpad /e /y >NUL
+md installdir\include\breakpad\google_breapad\common
+md installdir\include\breakpad\google_breapad\processor
+md installdir\include\breakpad\processor
+xcopy src\client\windows\common\*.h installdir\include\breakpad\client\windows\common\ /y /e
+xcopy src\client\windows\crash_generation\*.h installdir\include\breakpad\client\windows\crash_generation\ /y /e
+xcopy src\client\windows\handler\*.h installdir\include\breakpad\client\windows\handler\ /y /e
+xcopy src\client\windows\sender\*.h installdir\include\breakpad\client\windows\sender\ /y /e
+xcopy src\common\*.h installdir\include\breakpad\common\ /y /e
+xcopy src\common\windows\*.h installdir\include\breakpad\common\windows\ /y /e
+xcopy src\google_breakpad\common\*.h installdir\include\breakpad\google_breakpad\common\ /y /e
+xcopy src\google_breakpad\processor\*.h installdir\include\breakpad\google_breakpad\processor\ /y /e
+xcopy src\processor\*.h installdir\include\breakpad\processor\ /y /e
 REM Finalization
 cd c:\dev\breakpad\installdir\bin
 curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/minidump_stackwalk.exe -o minidump_stackwalk.exe
