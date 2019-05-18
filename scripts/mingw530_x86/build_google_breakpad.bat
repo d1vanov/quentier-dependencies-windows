@@ -24,15 +24,15 @@ md installdir\include\breakpad\common\windows
 md installdir\include\breakpad\google_breapad\common
 md installdir\include\breakpad\google_breapad\processor
 md installdir\include\breakpad\processor
-xcopy src\client\windows\common\*.h installdir\include\breakpad\client\windows\common
-xcopy src\client\windows\crash_generation\*.h installdir\include\breakpad\client\windows\crash_generation
-xcopy src\client\windows\handler\*.h installdir\include\breakpad\client\windows\handler
-xcopy src\client\windows\sender\*.h installdir\include\breakpad\client\windows\sender
-xcopy src\common\*.h installdir\include\breakpad\common
-xcopy src\common\windows\*.h installdir\include\breakpad\common\windows
-xcopy src\google_breakpad\common\*.h installdir\include\breakpad\google_breakpad\common
-xcopy src\google_breakpad\processor\*.h installdir\include\breakpad\google_breakpad\processor
-xcopy src\processor\*.h installdir\include\breakpad\processor
+xcopy src\client\windows\common\*.h installdir\include\breakpad\client\windows\common /y /e
+xcopy src\client\windows\crash_generation\*.h installdir\include\breakpad\client\windows\crash_generation /y /e
+xcopy src\client\windows\handler\*.h installdir\include\breakpad\client\windows\handler /y /e
+xcopy src\client\windows\sender\*.h installdir\include\breakpad\client\windows\sender /y /e
+xcopy src\common\*.h installdir\include\breakpad\common /y /e
+xcopy src\common\windows\*.h installdir\include\breakpad\common\windows /y /e
+xcopy src\google_breakpad\common\*.h installdir\include\breakpad\google_breakpad\common /y /e
+xcopy src\google_breakpad\processor\*.h installdir\include\breakpad\google_breakpad\processor /y /e
+xcopy src\processor\*.h installdir\include\breakpad\processor /y /e
 REM Finalization
 cd c:\dev\breakpad\installdir\bin
 curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/minidump_stackwalk.exe -o minidump_stackwalk.exe
