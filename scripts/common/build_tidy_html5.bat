@@ -14,5 +14,5 @@ if not %build_tool%==mingw copy c:\dev\tidy-html5\build-tidy\CMakeFiles\tidy-sta
 if %build_tool%==mingw set PATH=%PATH%;C:\Program Files\Git\usr\bin
 REM Finalization
 cd installdir
-7z a tidy-html5-5.6.0-%build_suite%_%arch_name%.zip *
-mv tidy-html5-5.6.0-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
+7z a tidy-html5-5.6.0-%build_tool%_%arch_name%.zip *
+mv tidy-html5-5.6.0-%build_tool%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%

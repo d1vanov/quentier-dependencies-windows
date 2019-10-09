@@ -15,5 +15,5 @@ cmake --build . --target install
 if %build_tool%==mingw set PATH=%PATH%;C:\Program Files\Git\usr\bin
 REM Finalization
 cd installdir
-7z a qtkeychain-0.9.1-%build_suite%_%arch_name%.zip *
-mv qtkeychain-0.9.1-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
+7z a qtkeychain-0.9.1-%build_tool%_%arch_name%.zip *
+mv qtkeychain-0.9.1-%build_tool%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%

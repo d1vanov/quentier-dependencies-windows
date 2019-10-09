@@ -48,5 +48,5 @@ curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win3
 curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cygstdc++-6.dll -o cygstdc++-6.dll
 curl -fsSL http://hg.mozilla.org/build/tools/raw-file/755e58ebc9d4/breakpad/win32/cyggcc_s-1.dll -o cyggcc_s-1.dll
 cd ..
-7z a breakpad-%build_suite%_%arch_name%.zip *
-mv breakpad-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
+7z a breakpad-%build_tool%_%arch_name%.zip *
+mv breakpad-%build_tool%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%

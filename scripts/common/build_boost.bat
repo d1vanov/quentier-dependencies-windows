@@ -13,5 +13,5 @@ xcopy c:\dev\boost_1_65_0\boost include\boost /e /y >NUL
 md bin
 move lib\*.dll bin\
 REM Finalization
-7z a boost-1_65_0-%build_suite%_%arch_name%.zip *
-mv boost-1_65_0-%build_suite%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%
+7z a boost-1_65_0-%build_tool%_%arch_name%.zip *
+mv boost-1_65_0-%build_tool%_%arch_name%.zip %APPVEYOR_BUILD_FOLDER%

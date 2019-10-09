@@ -15,13 +15,13 @@ environment:
    - prepare_mode: NO
      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
      arch_name: x86
-     build_tool: msvc
+     build_tool: msvc2019
      build_suite: msvc2019_32
      qt: msvc2019_32
    - prepare_mode: NO
      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
      arch_name: x64
-     build_tool: msvc
+     build_tool: msvc2019
      build_suite: msvc2019_64
      qt: msvc2019_64
    - prepare_mode: NO
@@ -71,27 +71,27 @@ install:
 build_script:
   - if not exist %APPVEYOR_BUILD_FOLDER% md %APPVEYOR_BUILD_FOLDER%
 # Boost
-  - if not exist %APPVEYOR_BUILD_FOLDER%\boost-1_65_0-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_boost.bat else echo "Using cached version of boost"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\boost-1_65_0-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_boost.bat else echo "Using cached version of boost"
 # openssl
-  - if not exist %APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_openssl.bat else echo "Using cached version of openssl"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_openssl.bat else echo "Using cached version of openssl"
 # libiconv
-  - if not exist %APPVEYOR_BUILD_FOLDER%\libiconv-1.15-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_libiconv.bat else echo "Using cached version of libiconv"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\libiconv-1.15-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libiconv.bat else echo "Using cached version of libiconv"
 # zlib
-  - if not exist %APPVEYOR_BUILD_FOLDER%\zlib-1.2.11-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_zlib.bat else echo "Using cached version of zlib"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\zlib-1.2.11-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_zlib.bat else echo "Using cached version of zlib"
 # libxml2
-  - if not exist %APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_libxml2.bat else echo "Using cached version of libxml2"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libxml2.bat else echo "Using cached version of libxml2"
 # libhunspell
   - if not %build_tool%==mingw set HUNSPELL_VERSION=1.7.0
   - if %build_tool%==mingw set HUNSPELL_VERSION=1.6.2
-  - if not exist %APPVEYOR_BUILD_FOLDER%\libhunspell-%HUNSPELL_VERSION%-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_libhunspell.bat else echo "Using cached version of libhunspell"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\libhunspell-%HUNSPELL_VERSION%-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libhunspell.bat else echo "Using cached version of libhunspell"
 # tidy-html5
-  - if not exist %APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-%build_suite%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_tidy_html5.bat else echo "Using cached version of tidy-html5"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-%build_tool%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_tidy_html5.bat else echo "Using cached version of tidy-html5"
 # qtkeychain
-  - if not exist %APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-%build_suite%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_qtkeychain.bat else echo "Using cached version of qtkeychain"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-%build_tool%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_qtkeychain.bat else echo "Using cached version of qtkeychain"
 # Google breakpad
-  - if not exist %APPVEYOR_BUILD_FOLDER%\breakpad-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_google_breakpad.bat else echo "Using cached version of google breakpad"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\breakpad-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_google_breakpad.bat else echo "Using cached version of google breakpad"
 # libbacktrace, only for MinGW
-  - if %build_tool%==mingw if not exist %APPVEYOR_BUILD_FOLDER%\libbacktrace-%build_suite%_%arch_name%.zip %SCRIPTSDIR%\build_libbacktrace.bat else echo "Using cached version of libbacktrace"
+  - if %build_tool%==mingw if not exist %APPVEYOR_BUILD_FOLDER%\libbacktrace-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libbacktrace.bat else echo "Using cached version of libbacktrace"
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
