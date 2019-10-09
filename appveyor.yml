@@ -13,16 +13,17 @@ environment:
      build_tool: none
      build_suite: none
    - prepare_mode: NO
+     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
      arch_name: x86
      build_tool: msvc
-     build_suite: msvc2015
-     qt: msvc2015
+     build_suite: msvc2019_32
+     qt: msvc2019_32
    - prepare_mode: NO
-     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
      arch_name: x64
      build_tool: msvc
-     build_suite: msvc2017
-     qt: msvc2017_64
+     build_suite: msvc2019_64
+     qt: msvc2019_64
    - prepare_mode: NO
      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
      arch_name: x86
@@ -36,21 +37,20 @@ environment:
 clone_folder: c:\dev\quentier-dependencies-windows
 
 init:
-  - if not %build_tool%==mingw set PATH=C:\Qt\5.10\%qt%\bin;%PATH%
+  - if not %build_tool%==mingw set PATH=C:\Qt\5.13\%qt%\bin;%PATH%
   - if %build_tool%==mingw set PATH=C:\Qt\5.5\%qt%\bin;%PATH%
   - set ORIGPATH=%PATH%
-  - if %build_suite%==msvc2017 set tool=VS2017_x64
-  - if %build_suite%==msvc2015 set tool=VS2015_x86
+  - if %build_suite%==msvc2019_64 set tool=VS2019_x64
+  - if %build_suite%==msvc2019_32 set tool=VS2019_x86
   - if %build_suite%==mingw530 set tool=MinGW_x86
-  - if %build_suite%==msvc2017 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-  - if %build_suite%==msvc2015 call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %platform%
+  - if %build_suite%==msvc2019_64 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - if %build_suite%==msvc2019_32 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x86
   - if not %build_tool%==mingw (set MAKEFILES="NMake Makefiles") else (set MAKEFILES="MinGW Makefiles")
   - if %build_tool%==mingw set PATH=C:\MinGW\bin;C:\Program Files (x86)\CMake\bin;%PATH%
-  - if %build_suite%==msvc2017 set PATH=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin;%PATH%
-  - if %build_suite%==msvc2015 set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+  - if not %platform%==mingw set PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\15.0\Bin";%PATH%
   - if %build_tool%==mingw set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\mingw530_x86
-  - if %build_suite%==msvc2015 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\msvc2015_x86
-  - if %build_suite%==msvc2017 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\msvc2017_x64
+  - if %build_suite%==msvc2019_32 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\msvc2019_x86
+  - if %build_suite%==msvc2019_64 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\msvc2019_x64
   - set COMMONSCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\common
 
 install:
@@ -107,31 +107,31 @@ matrix:
    - prepare_mode: YES
 
 cache:
-  - '%APPVEYOR_BUILD_FOLDER%\boost-1_65_0-msvc2015_x86.zip -> cache_versions\boost-msvc2015_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\boost-1_65_0-msvc2017_x64.zip -> cache_versions\boost-msvc2017_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\boost-1_65_0-msvc2019_x86.zip -> cache_versions\boost-msvc2019_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\boost-1_65_0-msvc2019_x64.zip -> cache_versions\boost-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\boost-1_65_0-mingw530_x86.zip -> cache_versions\boost-mingw530_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-msvc2015_x86.zip -> cache_versions\openssl-msvc2015_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-msvc2017_x64.zip -> cache_versions\openssl-msvc2017_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-msvc2019_x86.zip -> cache_versions\openssl-msvc2019_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-msvc2019_x64.zip -> cache_versions\openssl-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-mingw530_x86.zip -> cache_versions\openssl-mingw530_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\libiconv-1.15-msvc2015_x86.zip -> cache_versions\libiconv-msvc2015_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\libiconv-1.15-msvc2017_x64.zip -> cache_versions\libiconv-msvc2017_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\libiconv-1.15-msvc2019_x86.zip -> cache_versions\libiconv-msvc2019_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\libiconv-1.15-msvc2019_x64.zip -> cache_versions\libiconv-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\libiconv-1.15-mingw530_x86.zip -> cache_versions\libiconv-mingw530_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\zlib-1.2.11-msvc2015_x86.zip -> cache_versions\zlib-msvc2015_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\zlib-1.2.11-msvc2017_x64.zip -> cache_versions\zlib-msvc2017_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\zlib-1.2.11-msvc2019_x86.zip -> cache_versions\zlib-msvc2019_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\zlib-1.2.11-msvc2019_x64.zip -> cache_versions\zlib-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\zlib-1.2.11-mingw530_x86.zip -> cache_versions\zlib-mingw530_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-msvc2015_x86.zip -> cache_versions\libxml2-msvc2015_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-msvc2017_x64.zip -> cache_versions\libxml2-msvc2017_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-msvc2019_x86.zip -> cache_versions\libxml2-msvc2019_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-msvc2019_x64.zip -> cache_versions\libxml2-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-mingw530_x86.zip -> cache_versions\libxml2-mingw530_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\libhunspell-1.7.0-msvc2015_x86.zip -> cache_versions\libhunspell-msvc2015_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\libhunspell-1.7.0-msvc2017_x64.zip -> cache_versions\libhunspell-msvc2017_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\libhunspell-1.7.0-msvc2019_x86.zip -> cache_versions\libhunspell-msvc2019_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\libhunspell-1.7.0-msvc2019_x64.zip -> cache_versions\libhunspell-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\libhunspell-1.6.2-mingw530_x86.zip -> cache_versions\libhunspell-mingw530_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-msvc2015_x86.zip -> cache_versions\tidy-html5-msvc2015_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-msvc2017_x64.zip -> cache_versions\tidy-html5-msvc2017_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-msvc2019_x86.zip -> cache_versions\tidy-html5-msvc2019_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-msvc2019_x64.zip -> cache_versions\tidy-html5-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-mingw530_x86.zip -> cache_versions\tidy-html5-mingw530_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-msvc2015_x86.zip -> cache_versions\qtkeychain-msvc2015_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-msvc2017_x64.zip -> cache_versions\qtkeychain-msvc2017_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-msvc2019_x86.zip -> cache_versions\qtkeychain-msvc2019_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-msvc2019_x64.zip -> cache_versions\qtkeychain-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-mingw530_x86.zip -> cache_versions\qtkeychain-mingw530_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\breakpad-msvc2015_x86.zip -> cache_versions\breakpad-msvc2015_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\breakpad-msvc2017_x64.zip -> cache_versions\breakpad-msvc2017_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\breakpad-msvc2019_x86.zip -> cache_versions\breakpad-msvc2019_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\breakpad-msvc2019_x64.zip -> cache_versions\breakpad-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\breakpad-mingw530_x86.zip -> cache_versions\breakpad-mingw530_x86.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\libbacktrace-mingw530_x86.zip -> cache_versions\libbacktrace-mingw530_x86.txt, cache_versions\global.txt'
