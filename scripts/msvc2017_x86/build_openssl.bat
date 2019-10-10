@@ -20,5 +20,5 @@ copy installdir-dbg\lib\libeay32.lib installdir\lib\libeay32d.lib
 copy installdir-dbg\lib\ssleay32.lib installdir\lib\ssleay32d.lib
 REM Finalization
 cd installdir
-7z a openssl-1_0_2r-msvc2019_x86.zip *
-mv openssl-1_0_2r-msvc2019_x86.zip %APPVEYOR_BUILD_FOLDER%
+7z a openssl-1_0_2r-msvc2017_x86.zip *
+mv openssl-1_0_2r-msvc2017_x86.zip %APPVEYOR_BUILD_FOLDER%

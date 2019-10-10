@@ -14,5 +14,5 @@ copy msvc\x64\Release_dll\libhunspell.dll installdir\bin\
 xcopy src\hunspell installdir\include\hunspell /e >NUL
 REM Finalization
 cd installdir
-7z a libhunspell-1.7.0-msvc2019_x64.zip *
-mv libhunspell-1.7.0-msvc2019_x64.zip %APPVEYOR_BUILD_FOLDER%
+7z a libhunspell-1.7.0-msvc2017_x64.zip *
+mv libhunspell-1.7.0-msvc2017_x64.zip %APPVEYOR_BUILD_FOLDER%
