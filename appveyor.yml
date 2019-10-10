@@ -27,7 +27,7 @@ environment:
    - prepare_mode: NO
      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
      arch_name: x86
-     build_tool: mingw
+     build_tool: mingw530
      build_suite: mingw530
      qt: mingw492_32
      HOST: i686-w64-mingw32
@@ -37,18 +37,18 @@ environment:
 clone_folder: c:\dev\quentier-dependencies-windows
 
 init:
-  - if not %build_tool%==mingw set PATH=C:\Qt\5.13\%qt%\bin;%PATH%
-  - if %build_tool%==mingw set PATH=C:\Qt\5.5\%qt%\bin;%PATH%
+  - if not %build_tool%==mingw530 set PATH=C:\Qt\5.13\%qt%\bin;%PATH%
+  - if %build_tool%==mingw530 set PATH=C:\Qt\5.5\%qt%\bin;%PATH%
   - set ORIGPATH=%PATH%
   - if %build_suite%==msvc2017_64 set tool=VS2017_x64
   - if %build_suite%==msvc2017_32 set tool=VS2017_x86
   - if %build_suite%==mingw530 set tool=MinGW_x86
   - if %build_suite%==msvc2017_64 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
   - if %build_suite%==msvc2017_32 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x86
-  - if not %build_tool%==mingw (set MAKEFILES="NMake Makefiles") else (set MAKEFILES="MinGW Makefiles")
-  - if %build_tool%==mingw set PATH=C:\MinGW\bin;C:\Program Files (x86)\CMake\bin;%PATH%
-  - if not %platform%==mingw set PATH="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin";%PATH%
-  - if %build_tool%==mingw set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\mingw530_x86
+  - if not %build_tool%==mingw530 (set MAKEFILES="NMake Makefiles") else (set MAKEFILES="MinGW Makefiles")
+  - if %build_tool%==mingw530 set PATH=C:\MinGW\bin;C:\Program Files (x86)\CMake\bin;%PATH%
+  - if not %platform%==mingw530 set PATH="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin";%PATH%
+  - if %build_tool%==mingw530 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\mingw530_x86
   - if %build_suite%==msvc2017_32 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\msvc2017_x86
   - if %build_suite%==msvc2017_64 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\msvc2017_x64
   - set COMMONSCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\common
@@ -62,11 +62,11 @@ install:
   - if %prepare_mode%==YES c:\dev\ciuploadtool\ciuploadtool.exe -preponly
   - ps: if ($env:prepare_mode -eq "YES") { throw "Failing in order to stop the current build matrix job early" }
 # Get NASM (required to build OpenSSL for MinGW)
-  - if %build_tool%==mingw md c:\dev\nasm
-  - if %build_tool%==mingw cd c:\dev\nasm
-  - if %build_tool%==mingw curl -fsSL http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe -o nasminst.exe
-  - if %build_tool%==mingw start /wait nasminst.exe /S
-  - if %build_tool%==mingw set PATH=C:\Program Files (x86)\nasm;%PATH%
+  - if %build_tool%==mingw530 md c:\dev\nasm
+  - if %build_tool%==mingw530 cd c:\dev\nasm
+  - if %build_tool%==mingw530 curl -fsSL http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe -o nasminst.exe
+  - if %build_tool%==mingw530 start /wait nasminst.exe /S
+  - if %build_tool%==mingw530 set PATH=C:\Program Files (x86)\nasm;%PATH%
 
 build_script:
   - if not exist %APPVEYOR_BUILD_FOLDER% md %APPVEYOR_BUILD_FOLDER%
@@ -81,8 +81,8 @@ build_script:
 # libxml2
   - if not exist %APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libxml2.bat else echo "Using cached version of libxml2"
 # libhunspell
-  - if not %build_tool%==mingw set HUNSPELL_VERSION=1.7.0
-  - if %build_tool%==mingw set HUNSPELL_VERSION=1.6.2
+  - if not %build_tool%==mingw530 set HUNSPELL_VERSION=1.7.0
+  - if %build_tool%==mingw530 set HUNSPELL_VERSION=1.6.2
   - if not exist %APPVEYOR_BUILD_FOLDER%\libhunspell-%HUNSPELL_VERSION%-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libhunspell.bat else echo "Using cached version of libhunspell"
 # tidy-html5
   - if not exist %APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-%build_tool%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_tidy_html5.bat else echo "Using cached version of tidy-html5"
@@ -91,7 +91,7 @@ build_script:
 # Google breakpad
   - if not exist %APPVEYOR_BUILD_FOLDER%\breakpad-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_google_breakpad.bat else echo "Using cached version of google breakpad"
 # libbacktrace, only for MinGW
-  - if %build_tool%==mingw if not exist %APPVEYOR_BUILD_FOLDER%\libbacktrace-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libbacktrace.bat else echo "Using cached version of libbacktrace"
+  - if %build_tool%==mingw530 if not exist %APPVEYOR_BUILD_FOLDER%\libbacktrace-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libbacktrace.bat else echo "Using cached version of libbacktrace"
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
