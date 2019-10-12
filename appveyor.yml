@@ -71,8 +71,8 @@ install:
 build_script:
   - if not exist %APPVEYOR_BUILD_FOLDER% md %APPVEYOR_BUILD_FOLDER%
 # Boost
-  - if %build_tool%==mingw530 (set BOOSTVERSION=1_65_0) else (set BOOSTVERSION=1_70_0)
-  - if not exist %APPVEYOR_BUILD_FOLDER%\boost-%BOOSTVERSION%-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_boost.bat else echo "Using cached version of boost"
+  - if %build_tool%==mingw530 (set BOOSTVERSION=65) else (set BOOSTVERSION=70)
+  - if not exist %APPVEYOR_BUILD_FOLDER%\boost-1_%BOOSTVERSION%_0-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_boost.bat else echo "Using cached version of boost"
 # openssl
   - if not exist %APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_openssl.bat else echo "Using cached version of openssl"
 # libiconv
