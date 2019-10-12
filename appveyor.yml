@@ -71,7 +71,8 @@ install:
 build_script:
   - if not exist %APPVEYOR_BUILD_FOLDER% md %APPVEYOR_BUILD_FOLDER%
 # Boost
-  - if not exist %APPVEYOR_BUILD_FOLDER%\boost-1_70_0-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_boost.bat else echo "Using cached version of boost"
+  - if %build_tool%==mingw530 set BOOSTVERSION=1_65_0 else set BOOSTVERSION=1_70_0
+  - if not exist %APPVEYOR_BUILD_FOLDER%\boost-%BOOSTVERSION%-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_boost.bat else echo "Using cached version of boost"
 # openssl
   - if not exist %APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_openssl.bat else echo "Using cached version of openssl"
 # libiconv
@@ -109,7 +110,7 @@ matrix:
 cache:
   - '%APPVEYOR_BUILD_FOLDER%\boost-1_70_0-msvc2017_x86.zip -> cache_versions\boost-msvc2017_x86.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\boost-1_70_0-msvc2017_x64.zip -> cache_versions\boost-msvc2017_x64.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\boost-1_70_0-mingw530_x86.zip -> cache_versions\boost-mingw530_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\boost-1_65_0-mingw530_x86.zip -> cache_versions\boost-mingw530_x86.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-msvc2017_x86.zip -> cache_versions\openssl-msvc2017_x86.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-msvc2017_x64.zip -> cache_versions\openssl-msvc2017_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\openssl-1_0_2r-mingw530_x86.zip -> cache_versions\openssl-mingw530_x86.txt, cache_versions\global.txt'
