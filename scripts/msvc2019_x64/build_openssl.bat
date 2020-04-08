@@ -11,7 +11,7 @@ cd openssl1_1-win-build
 git checkout v1.1.1f
 cd build-VS2019
 REM Build
-msbuild openssl1_1.sln /p:Configuration="Release" /p:Platform="x64" /clp:ErrorsOnly
+msbuild openssl1_1.sln /p:Configuration="Release" /p:Platform="x64"
 md installdir
 md installdir\include
 md installdir\bin
