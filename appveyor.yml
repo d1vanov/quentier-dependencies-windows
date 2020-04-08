@@ -13,19 +13,19 @@ environment:
      arch_name: x86
      build_tool: msvc2019
      build_suite: msvc2019_32
-     qt: msvc2019
+     qt: msvc2017
    - prepare_mode: NO
      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
      arch_name: x86
      build_tool: msvc2019
      build_suite: msvc2019_32
-     qt: msvc2019
+     qt: msvc2017
    - prepare_mode: NO
      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
      arch_name: x64
      build_tool: msvc2019
      build_suite: msvc2019_64
-     qt: msvc2019_64
+     qt: msvc2017_64
    - prepare_mode: NO
      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
      arch_name: x86
