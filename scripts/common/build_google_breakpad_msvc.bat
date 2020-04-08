@@ -23,6 +23,7 @@ dir /s /b
 cd src\client\windows
 echo "Calling MSBuild to actually build projects"
 dir /s /b
+devenv /Upgrade breakpad_client.sln
 if %build_suite%==msvc2019_32 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="Win32"
 if %build_suite%==msvc2019_32 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="Win32"
 if %build_suite%==msvc2019_64 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="x64"
