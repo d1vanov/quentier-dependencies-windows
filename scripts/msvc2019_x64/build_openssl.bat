@@ -8,5 +8,5 @@ nmake > NUL
 nmake test >NUL 2>&1
 nmake install >NUL
 cd installdir
-7z a openssl-1_1_1d-msvc2017_x64.zip *
-mv openssl-1_1_1d-msvc2017_x64.zip %APPVEYOR_BUILD_FOLDER%
+7z a openssl-1_1_1d-msvc2019_x64.zip *
+mv openssl-1_1_1d-msvc2019_x64.zip %APPVEYOR_BUILD_FOLDER%
