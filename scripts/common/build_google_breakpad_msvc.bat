@@ -17,12 +17,16 @@ md installdir\lib
 md installdir\bin
 xcopy src installdir\include\breakpad /e /y >NUL
 C:\msys64\usr\bin\bash -lc "cd /c/dev/breakpad/src/build && sed -i -e \"s/'WarnAsError': 'true'/'WarnAsError': 'false'/g\" common.gypi"
+echo "Calling gyp to create MSBuild projects"
 call ..\gyp\gyp.bat src\client\windows\breakpad_client.gyp --no-circular-check -Dwin_release_RuntimeLibrary=2 -Dwin_debug_RuntimeLibrary=3
+dir /s /b
 cd src\client\windows
-if %build_suite%==msvc2019_32 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
-if %build_suite%==msvc2019_32 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="Win32" /clp:ErrorsOnly
-if %build_suite%==msvc2019_64 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="x64" /clp:ErrorsOnly
-if %build_suite%==msvc2019_64 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="x64" /clp:ErrorsOnly
+echo "Calling MSBuild to actually build projects"
+dir /s /b
+if %build_suite%==msvc2019_32 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="Win32"
+if %build_suite%==msvc2019_32 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="Win32"
+if %build_suite%==msvc2019_64 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="x64"
+if %build_suite%==msvc2019_64 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="x64"
 copy Release\lib\common.lib c:\dev\breakpad\installdir\lib
 copy Release\lib\crash_generation_client.lib c:\dev\breakpad\installdir\lib
 copy Release\lib\crash_generation_server.lib c:\dev\breakpad\installdir\lib
@@ -38,8 +42,8 @@ copy Debug\exception_handler.pdb c:\dev\breakpad\installdir\bin\
 cd c:\dev\breakpad
 call ..\gyp\gyp.bat src\tools\windows\tools_windows.gyp --no-circular-check -Dwin_release_RuntimeLibrary=2 -Dwin_debug_RuntimeLibrary=3
 cd src\tools\windows
-if %build_suite%==msvc2019_32 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
-if %build_suite%==msvc2019_64 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="x64"  /clp:ErrorsOnly
+if %build_suite%==msvc2019_32 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="Win32"
+if %build_suite%==msvc2019_64 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="x64"
 copy Release\dump_syms.exe c:\dev\breakpad\installdir\bin
 REM Finalization
 cd c:\dev\breakpad\installdir\bin
