@@ -3,7 +3,7 @@ echo "Building openssl"
 git clone https://github.com/openssl/openssl.git
 cd openssl
 git checkout OpenSSL_1_1_1h
-perl Configure VC-WIN32 no-asm --prefix=%cd%\installdir
+c:\Strawberry\perl\bin\perl Configure VC-WIN32 no-asm --prefix=%cd%\installdir
 nmake >NUL
 nmake test >NUL 2>&1
 nmake install >NUL
