@@ -26,6 +26,18 @@ environment:
      build_tool: msvc2019
      build_suite: msvc2019_64
      qt: msvc2019_64
+   - prepare_mode: NO
+     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+     arch_name: x86
+     build_tool: msvc2017
+     build_suite: msvc2017_32
+     qt: msvc2017
+   - prepare_mode: NO
+     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+     arch_name: x64
+     build_tool: msvc2017
+     build_suite: msvc2017_64
+     qt: msvc2017_64
 
 clone_folder: c:\dev\quentier-dependencies-windows
 
@@ -57,17 +69,17 @@ build_script:
   - if %build_tool%==msvc2019 if exist %APPVEYOR_BUILD_FOLDER%\openssl-1_1_1i-%build_tool%_%arch_name%.zip echo "Using cached version of openssl"
   - if %build_tool%==msvc2019 if not exist %APPVEYOR_BUILD_FOLDER%\openssl-1_1_1i-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_openssl.bat
 # libiconv
-  - if not exist %APPVEYOR_BUILD_FOLDER%\libiconv-1.15-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libiconv.bat else echo "Using cached version of libiconv"
+  - if %build_tool%==msvc2019 if not exist %APPVEYOR_BUILD_FOLDER%\libiconv-1.15-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libiconv.bat else echo "Using cached version of libiconv"
 # zlib
-  - if not exist %APPVEYOR_BUILD_FOLDER%\zlib-1.2.11-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_zlib.bat else echo "Using cached version of zlib"
+  - if %build_tool%==msvc2019 if not exist %APPVEYOR_BUILD_FOLDER%\zlib-1.2.11-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_zlib.bat else echo "Using cached version of zlib"
 # libxml2
-  - if not exist %APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libxml2.bat else echo "Using cached version of libxml2"
+  - if %build_tool%==msvc2019 if not exist %APPVEYOR_BUILD_FOLDER%\libxml2-2.9.7-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libxml2.bat else echo "Using cached version of libxml2"
 # libhunspell
-  - if not exist %APPVEYOR_BUILD_FOLDER%\libhunspell-1.7.0-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libhunspell.bat else echo "Using cached version of libhunspell"
+  - if %build_tool%==msvc2019 if not exist %APPVEYOR_BUILD_FOLDER%\libhunspell-1.7.0-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libhunspell.bat else echo "Using cached version of libhunspell"
 # tidy-html5
-  - if not exist %APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-%build_tool%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_tidy_html5.bat else echo "Using cached version of tidy-html5"
+  - if %build_tool%==msvc2019 if not exist %APPVEYOR_BUILD_FOLDER%\tidy-html5-5.6.0-%build_tool%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_tidy_html5.bat else echo "Using cached version of tidy-html5"
 # qtkeychain
-  - if not exist %APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-%build_tool%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_qtkeychain.bat else echo "Using cached version of qtkeychain"
+  - if %build_tool%==msvc2019 if not exist %APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-%build_tool%_%arch_name%.zip %COMMONSCRIPTSDIR%\build_qtkeychain.bat else echo "Using cached version of qtkeychain"
 # Google breakpad
   - if not exist %APPVEYOR_BUILD_FOLDER%\breakpad-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_google_breakpad.bat else echo "Using cached version of google breakpad"
 
@@ -101,3 +113,5 @@ cache:
   - '%APPVEYOR_BUILD_FOLDER%\qtkeychain-0.9.1-msvc2019_x64.zip -> cache_versions\qtkeychain-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\breakpad-msvc2019_x86.zip -> cache_versions\breakpad-msvc2019_x86.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\breakpad-msvc2019_x64.zip -> cache_versions\breakpad-msvc2019_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\breakpad-msvc2017_x86.zip -> cache_versions\breakpad-msvc2017_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\breakpad-msvc2017_x64.zip -> cache_versions\breakpad-msvc2017_x64.txt, cache_versions\global.txt'
