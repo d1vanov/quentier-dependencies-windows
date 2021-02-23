@@ -22,8 +22,12 @@ cd src\client\windows
 devenv /Upgrade breakpad_client.sln
 if %build_suite%==msvc2019_32 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
 if %build_suite%==msvc2019_32 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="Win32" /clp:ErrorsOnly
+if %build_suite%==msvc2017_32 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
+if %build_suite%==msvc2017_32 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="Win32" /clp:ErrorsOnly
 if %build_suite%==msvc2019_64 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="x64" /clp:ErrorsOnly
 if %build_suite%==msvc2019_64 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="x64" /clp:ErrorsOnly
+if %build_suite%==msvc2017_64 msbuild breakpad_client.sln /p:Configuration="Release" /p:Platform="x64" /clp:ErrorsOnly
+if %build_suite%==msvc2017_64 msbuild breakpad_client.sln /p:Configuration="Debug" /p:Platform="x64" /clp:ErrorsOnly
 copy Release\lib\common.lib c:\dev\breakpad\installdir\lib
 copy Release\lib\crash_generation_client.lib c:\dev\breakpad\installdir\lib
 copy Release\lib\crash_generation_server.lib c:\dev\breakpad\installdir\lib
@@ -41,6 +45,8 @@ call ..\gyp\gyp.bat src\tools\windows\tools_windows.gyp --no-circular-check -Dwi
 cd src\tools\windows
 if %build_suite%==msvc2019_32 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
 if %build_suite%==msvc2019_64 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="x64"  /clp:ErrorsOnly
+if %build_suite%==msvc2017_32 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
+if %build_suite%==msvc2017_64 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="x64"  /clp:ErrorsOnly
 copy Release\dump_syms.exe c:\dev\breakpad\installdir\bin
 REM Finalization
 cd c:\dev\breakpad\installdir\bin
