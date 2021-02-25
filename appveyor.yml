@@ -52,6 +52,8 @@ init:
   - set PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin";%PATH%
   - if %build_suite%==msvc2019_32 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\msvc2019_x86
   - if %build_suite%==msvc2019_64 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\msvc2019_x64
+  - if %build_suite%==msvc2017_32 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\msvc2017_x86
+  - if %build_suite%==msvc2017_64 set SCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\msvc2017_x64
   - set COMMONSCRIPTSDIR=c:\dev\quentier-dependencies-windows\scripts\common
 
 install:
