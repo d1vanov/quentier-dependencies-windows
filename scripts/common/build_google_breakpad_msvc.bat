@@ -16,7 +16,7 @@ md installdir\include\breakpad\common\windows
 md installdir\lib
 md installdir\bin
 xcopy src installdir\include\breakpad /e /y >NUL
-set GYP_MSVS_VERSION=2015
+set GYP_MSVS_VERSION=2017
 C:\msys64\usr\bin\bash -lc "cd /c/dev/breakpad/src/build && sed -i -e \"s/'WarnAsError': 'true'/'WarnAsError': 'false'/g\" common.gypi"
 call ..\gyp\gyp.bat src\client\windows\breakpad_client.gyp --no-circular-check -Dwin_release_RuntimeLibrary=2 -Dwin_debug_RuntimeLibrary=3
 cd src\client\windows
@@ -45,7 +45,6 @@ cd c:\dev\breakpad
 call ..\gyp\gyp.bat src\tools\windows\tools_windows.gyp --no-circular-check -Dwin_release_RuntimeLibrary=2 -Dwin_debug_RuntimeLibrary=3
 cd src\tools\windows
 devenv /Upgrade tools_windows.sln
-if %build_suite%==msvc2019_32 dir /s "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\DIA SDK\"
 if %build_tool%==msvc2019 set INCLUDE="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\DIA SDK\include";%INCLUDE%
 if %build_suite%==msvc2019_32 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="Win32" /clp:ErrorsOnly
 if %build_suite%==msvc2019_64 msbuild tools_windows.sln /p:Configuration="Release" /p:Platform="x64"  /clp:ErrorsOnly
