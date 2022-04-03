@@ -8,7 +8,8 @@ git clone https://github.com/google/googletest.git testing
 cd ..\..
 git clone https://chromium.googlesource.com/external/gyp
 cd gyp
-C:\Python37\bin\python setup.py install
+git checkout d6c5dd5
+C:\Python27\bin\python setup.py install
 cd ..\breakpad
 md installdir
 md installdir\include\breakpad\client\windows
