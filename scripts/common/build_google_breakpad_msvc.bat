@@ -2,7 +2,7 @@ cd c:\dev
 echo "Building breakpad"
 git clone https://chromium.googlesource.com/breakpad/breakpad
 cd breakpad
-git checkout chrome_64
+git checkout chrome_90
 cd src
 git clone https://github.com/google/googletest.git testing
 cd ..\..
