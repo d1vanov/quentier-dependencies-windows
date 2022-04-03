@@ -54,8 +54,8 @@ install:
 build_script:
   - if not exist %APPVEYOR_BUILD_FOLDER% md %APPVEYOR_BUILD_FOLDER%
 # openssl
-  - if exist %APPVEYOR_BUILD_FOLDER%\openssl-1_1_1i-%build_tool%_%arch_name%.zip echo "Using cached version of openssl"
-  - if not exist %APPVEYOR_BUILD_FOLDER%\openssl-1_1_1i-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_openssl.bat
+  - if exist %APPVEYOR_BUILD_FOLDER%\openssl-1_1_1n-%build_tool%_%arch_name%.zip echo "Using cached version of openssl"
+  - if not exist %APPVEYOR_BUILD_FOLDER%\openssl-1_1_1n-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_openssl.bat
 # libiconv
   - if not exist %APPVEYOR_BUILD_FOLDER%\libiconv-1.15-%build_tool%_%arch_name%.zip %SCRIPTSDIR%\build_libiconv.bat else echo "Using cached version of libiconv"
 # zlib
@@ -85,8 +85,8 @@ matrix:
    - prepare_mode: YES
 
 cache:
-  - '%APPVEYOR_BUILD_FOLDER%\openssl-1_1_1i-msvc2019_x86.zip -> cache_versions\openssl-msvc2019_x86.txt, cache_versions\global.txt'
-  - '%APPVEYOR_BUILD_FOLDER%\openssl-1_1_1i-msvc2019_x64.zip -> cache_versions\openssl-msvc2019_x64.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\openssl-1_1_1n-msvc2019_x86.zip -> cache_versions\openssl-msvc2019_x86.txt, cache_versions\global.txt'
+  - '%APPVEYOR_BUILD_FOLDER%\openssl-1_1_1n-msvc2019_x64.zip -> cache_versions\openssl-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\libiconv-1.15-msvc2019_x86.zip -> cache_versions\libiconv-msvc2019_x86.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\libiconv-1.15-msvc2019_x64.zip -> cache_versions\libiconv-msvc2019_x64.txt, cache_versions\global.txt'
   - '%APPVEYOR_BUILD_FOLDER%\zlib-1.2.11-msvc2019_x86.zip -> cache_versions\zlib-msvc2019_x86.txt, cache_versions\global.txt'
