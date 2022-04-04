@@ -9,7 +9,7 @@ cd ..\..
 git clone https://chromium.googlesource.com/external/gyp
 cd gyp
 git checkout 203fee270b606ad8e0e9c2d6314b59eb30369579
-C:\msys64\usr\bin\bash -lc "cd /c/dev/gyp && sed '7 i import collections' pylib/gyp/generator/msvs.py && sed -i -e '200s/.*/  folders = collections.OrderedDict()/' pylib/gyp/generator/msvs.py"
+C:\msys64\usr\bin\bash -lc "cd /c/dev/gyp && sed -i -e '7 i import collections' pylib/gyp/generator/msvs.py && sed -i -e '200s/.*/  folders = collections.OrderedDict()/' pylib/gyp/generator/msvs.py"
 python setup.py install
 cd ..\breakpad
 md installdir
