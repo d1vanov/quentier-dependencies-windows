@@ -8,8 +8,9 @@ git clone https://github.com/google/googletest.git testing
 cd ..\..
 git clone https://chromium.googlesource.com/external/gyp
 cd gyp
-git checkout d6c5dd5
-C:\Python27\bin\python setup.py install
+git checkout 203fee270b606ad8e0e9c2d6314b59eb30369579
+C:\msys64\usr\bin\bash -lc "cd /c/dev/gyp && sed '7 i import collections' pylib/gyp/generator/msvs.py && sed -i -e '200s/.*/folders = collections.OrderedDict()/' pylib/gyp/generator/msvs.py"
+python setup.py install
 cd ..\breakpad
 md installdir
 md installdir\include\breakpad\client\windows
