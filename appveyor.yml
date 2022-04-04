@@ -6,7 +6,7 @@ branches:
 
 environment:
  auth_token:
-   secure: rLuHhO0prerqoGCYmfOoyxqcwwamCXtuZtl4Jzqeu3aGgflk0mnX1fogLq68YcRW
+   secure: QcexYPPFv1hmUzQLI43UqVYp5do0CnBTS/Ei55CT9ZulhMq806V17IlCEzssCLgs
  matrix:
    - prepare_mode: YES
      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
