@@ -2,7 +2,7 @@ cd c:\dev
 echo "Building breakpad"
 git clone https://chromium.googlesource.com/breakpad/breakpad
 cd breakpad
-git checkout chrome_99
+git checkout chrome_64
 cd src
 git clone https://github.com/google/googletest.git testing
 cd ..\..
@@ -20,7 +20,6 @@ md installdir\bin
 xcopy src installdir\include\breakpad /e /y >NUL
 set GYP_MSVS_VERSION=2017
 C:\msys64\usr\bin\bash -lc "cd /c/dev/breakpad/src/build && sed -i -e \"s/'WarnAsError': 'true'/'WarnAsError': 'false'/g\" common.gypi"
-C:\msys64\usr\bin\bash -lc "cd /c/dev/breakpad/src/build && sed -i -e \"911s/.*/                'AdditionalOptions': ['\/MP', '-std:c++17']/g\" common.gypi"
 call ..\gyp\gyp.bat src\client\windows\breakpad_client.gyp --no-circular-check -Dwin_release_RuntimeLibrary=2 -Dwin_debug_RuntimeLibrary=3
 cd src\client\windows
 devenv /Upgrade breakpad_client.sln
